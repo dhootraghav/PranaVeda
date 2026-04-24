@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PranaVeda — Holistic Wellness Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth-deep: #2C1A0E;
+    --earth-warm: #5C3D1E;
+    --bark: #8B5A2B;
+    --clay: #C4885A;
+    --sand: #E8C9A0;
+    --cream: #FAF3E8;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --sage: #7A9E7E;
+    --sage-light: #A8C5A0;
+    --leaf: #4A7C59;
+    --mist: #F0EAE0;
+    --white: #FFFDF8;
+    --text-dark: #1E120A;
+    --text-mid: #5C3D1E;
+    --text-soft: #9A7A5A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,243,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,136,90,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 70px;
+    transition: all 0.3s;
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; color: var(--earth-deep);
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .logo-icon { width: 32px; height: 32px; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-mid); font-size: 0.85rem;
+    letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--bark); }
+  .nav-cta {
+    background: var(--earth-deep); color: var(--sand) !important;
+    padding: 8px 22px; border-radius: 2px; letter-spacing: 0.1em;
+  }
+  .nav-cta:hover { background: var(--bark) !important; color: var(--cream) !important; }
+
+  .hero {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(122,158,126,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(201,168,76,0.1) 0%, transparent 50%),
+      var(--cream);
+    display: flex; align-items: center;
+    padding: 0 5vw; padding-top: 70px;
+    padding-bottom: 180px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-circle {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(196,136,90,0.15);
+    animation: rotateSlow 40s linear infinite;
+  }
+  .hero-bg-circle:nth-child(1) { width: 700px; height: 700px; right: -150px; top: -100px; }
+  .hero-bg-circle:nth-child(2) { width: 500px; height: 500px; right: -50px; top: 0; border-color: rgba(201,168,76,0.1); animation-direction: reverse; }
+  .hero-bg-circle:nth-child(3) { width: 300px; height: 300px; right: 100px; top: 100px; border-color: rgba(122,158,126,0.2); }
+  @keyframes rotateSlow { to { transform: rotate(360deg); } }
+
+  .hero-content { max-width: 620px; z-index: 1; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 16px; border-radius: 50px; font-size: 0.75rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--bark);
+    margin-bottom: 2rem; font-weight: 500;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300; line-height: 1.1;
+    color: var(--earth-deep); margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--bark); }
+  .hero p {
+    font-size: 1.05rem; color: var(--text-soft); line-height: 1.8;
+    margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--earth-deep); color: var(--sand);
+    padding: 14px 32px; text-decoration: none; font-size: 0.85rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    border-radius: 2px; transition: all 0.3s; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { background: var(--bark); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--earth-deep);
+    padding: 14px 32px; text-decoration: none; font-size: 0.85rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    border-radius: 2px; border: 1.5px solid var(--clay); transition: all 0.3s; cursor: pointer;
+  }
+  .btn-outline:hover { background: var(--sand); }
+
+  .hero-visual {
+    position: absolute; right: 5vw; top: 50%; transform: translateY(-50%);
+    width: min(480px, 45vw); aspect-ratio: 1;
+  }
+  .wellness-orb {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(201,168,76,0.3), rgba(122,158,126,0.2), rgba(196,136,90,0.15));
+    border: 2px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; animation: pulse 4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); box-shadow: 0 0 40px rgba(201,168,76,0.1); }
+    50% { transform: scale(1.03); box-shadow: 0 0 80px rgba(201,168,76,0.2); }
+  }
+  .orb-inner {
+    width: 70%; height: 70%; border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, var(--gold-light), var(--clay), var(--bark));
+    display: flex; align-items: center; justify-content: center;
+    animation: pulse 4s ease-in-out infinite 0.5s;
+  }
+  .orb-text {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem,2vw,1.4rem);
+    color: var(--cream); text-align: center; font-weight: 300; letter-spacing: 0.05em;
+  }
+  .hero-stats {
+    position: absolute; bottom: 60px; left: 5vw;
+    display: flex; gap: 3rem;
+    z-index: 1;
+  }
+  .stat h3 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 400; color: var(--earth-deep); }
+  .stat p { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); }
+
+  section { padding: 100px 5vw; }
+  .section-tag {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--bark); font-weight: 600; margin-bottom: 1rem; display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 400; color: var(--earth-deep);
+    line-height: 1.2; margin-bottom: 1.5rem;
+  }
+  .section-sub { font-size: 1rem; color: var(--text-soft); line-height: 1.8; max-width: 580px; }
+  .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.5rem 0; }
+
+  .about-section { background: var(--earth-deep); color: var(--cream); }
+  .about-section .section-tag { color: var(--gold); }
+  .about-section .section-title { color: var(--sand); }
+  .about-section .section-sub { color: rgba(232,201,160,0.7); }
+  .about-section .divider { background: var(--gold); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center; }
+  .science-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .pillar {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2);
+    padding: 1.5rem; border-radius: 4px;
+  }
+  .pillar-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .pillar h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .pillar p { font-size: 0.85rem; color: rgba(232,201,160,0.6); line-height: 1.7; }
+  .about-visual { position: relative; }
+  .mandala {
+    width: 100%; aspect-ratio: 1; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .mandala-ring {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .mandala-ring:nth-child(1) { width: 85%; height: 85%; }
+  .mandala-ring:nth-child(2) { width: 65%; height: 65%; border-color: rgba(122,158,126,0.2); }
+  .mandala-ring:nth-child(3) { width: 45%; height: 45%; border-color: rgba(201,168,76,0.3); }
+  .mandala-center {
+    width: 30%; aspect-ratio: 1; border-radius: 50%;
+    background: var(--gold); display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; z-index: 1;
+  }
+
+  .services-section { background: var(--mist); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+  .service-card {
+    background: var(--white); border: 1px solid rgba(196,136,90,0.15);
+    padding: 2.5rem 2rem; border-radius: 4px; position: relative;
+    transition: all 0.3s; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--sage));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(44,26,14,0.08); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300;
+    color: rgba(196,136,90,0.2); position: absolute; top: 1rem; right: 1.5rem;
+  }
+  .service-icon { font-size: 2.2rem; margin-bottom: 1.2rem; }
+  .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--earth-deep); margin-bottom: 0.8rem; }
+  .service-card p { font-size: 0.88rem; color: var(--text-soft); line-height: 1.75; }
+  .service-tag {
+    display: inline-block; margin-top: 1.2rem; padding: 4px 12px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bark);
+    border-radius: 50px;
+  }
+
+  .assessment-section { background: var(--cream); }
+  .assessment-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: start; margin-top: 3rem;
+  }
+  .quiz-card {
+    background: var(--white); border: 1px solid rgba(196,136,90,0.2);
+    border-radius: 6px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(44,26,14,0.06);
+  }
+  .quiz-progress {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+  }
+  .progress-bar { flex: 1; height: 4px; background: var(--sand); border-radius: 2px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--gold), var(--sage));
+    border-radius: 2px; transition: width 0.5s ease; width: 20%;
+  }
+  .progress-text { font-size: 0.8rem; color: var(--text-soft); white-space: nowrap; }
+  .quiz-category {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--bark); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px;
+  }
+  .quiz-category::before { content: ''; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; }
+  .quiz-q { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--earth-deep); margin-bottom: 1.8rem; font-weight: 400; line-height: 1.4; }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+  .quiz-opt {
+    border: 1.5px solid rgba(196,136,90,0.2); background: transparent;
+    padding: 12px 18px; border-radius: 4px; text-align: left;
+    font-family: 'Jost', sans-serif; font-size: 0.9rem; color: var(--text-mid);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .quiz-opt:hover { border-color: var(--gold); background: rgba(201,168,76,0.07); color: var(--earth-deep); }
+  .quiz-opt.selected { border-color: var(--leaf); background: rgba(74,124,89,0.08); color: var(--leaf); }
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; gap: 1rem; }
+  .quiz-domains {
+    display: flex; gap: 0.6rem; flex-wrap: wrap;
+  }
+  .domain-chip {
+    padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+  .domain-chip.physical { background: rgba(196,136,90,0.15); color: var(--bark); }
+  .domain-chip.mental { background: rgba(122,158,126,0.15); color: var(--leaf); }
+  .domain-chip.emotional { background: rgba(201,168,76,0.15); color: var(--earth-warm); }
+  .assessment-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--earth-deep); margin-bottom: 1rem; }
+  .assessment-info p { color: var(--text-soft); font-size: 0.92rem; line-height: 1.8; margin-bottom: 2rem; }
+  .assessment-features { display: flex; flex-direction: column; gap: 1rem; }
+  .a-feature { display: flex; align-items: flex-start; gap: 1rem; }
+  .a-feat-icon {
+    width: 40px; height: 40px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .a-feat-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--earth-deep); margin-bottom: 0.3rem; }
+  .a-feat-text p { font-size: 0.82rem; color: var(--text-soft); line-height: 1.6; }
+
+  .dashboard-section { background: var(--earth-deep); padding: 100px 5vw; }
+  .dashboard-section .section-tag { color: var(--gold); }
+  .dashboard-section .section-title { color: var(--sand); }
+  .dashboard-section .divider { background: var(--gold); }
+  .dashboard-preview {
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px; padding: 2rem; overflow: hidden;
+  }
+  .dash-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+  .dash-user { display: flex; align-items: center; gap: 1rem; }
+  .dash-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--bark));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--cream);
+  }
+  .dash-user-info h4 { color: var(--sand); font-size: 0.95rem; margin-bottom: 2px; }
+  .dash-user-info span { color: rgba(232,201,160,0.5); font-size: 0.78rem; }
+  .dash-date { color: rgba(232,201,160,0.4); font-size: 0.82rem; }
+  .wellness-index {
+    text-align: center; padding: 1.5rem;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 6px; margin-bottom: 2rem;
+  }
+  .wi-score {
+    font-family: 'Cormorant Garamond', serif; font-size: 5rem; font-weight: 300;
+    color: var(--gold); line-height: 1;
+  }
+  .wi-label { color: rgba(232,201,160,0.5); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.5rem; }
+  .wi-status {
+    display: inline-block; margin-top: 0.8rem; padding: 4px 16px;
+    background: rgba(74,124,89,0.2); border: 1px solid rgba(74,124,89,0.3);
+    color: var(--sage-light); border-radius: 50px; font-size: 0.78rem; letter-spacing: 0.08em;
+  }
+  .dash-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 2rem; }
+  .metric-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.1);
+    padding: 1.2rem; border-radius: 6px;
+  }
+  .metric-name { font-size: 0.72rem; color: rgba(232,201,160,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .metric-score { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; margin-bottom: 0.5rem; }
+  .metric-score.physical { color: var(--clay); }
+  .metric-score.mental { color: var(--sage-light); }
+  .metric-score.emotional { color: var(--gold); }
+  .metric-bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .metric-fill { height: 100%; border-radius: 2px; transition: width 1.5s ease; }
+  .metric-fill.physical { background: var(--clay); }
+  .metric-fill.mental { background: var(--sage); }
+  .metric-fill.emotional { background: var(--gold); }
+
+  .reco-section { background: var(--mist); }
+  .reco-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3rem; }
+  .reco-card {
+    background: var(--white); border: 1px solid rgba(196,136,90,0.15);
+    border-radius: 4px; overflow: hidden; transition: all 0.3s;
+  }
+  .reco-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(44,26,14,0.08); }
+  .reco-top {
+    height: 120px; display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+  .reco-top.nutrition { background: linear-gradient(135deg, rgba(196,136,90,0.15), rgba(201,168,76,0.1)); }
+  .reco-top.lifestyle { background: linear-gradient(135deg, rgba(122,158,126,0.15), rgba(74,124,89,0.1)); }
+  .reco-top.mindfulness { background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(232,201,160,0.1)); }
+  .reco-body { padding: 1.5rem; }
+  .reco-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--earth-deep); margin-bottom: 0.6rem; }
+  .reco-body p { font-size: 0.85rem; color: var(--text-soft); line-height: 1.7; }
+  .reco-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .reco-tag {
+    padding: 3px 10px; font-size: 0.72rem; border-radius: 50px;
+    background: rgba(196,136,90,0.1); color: var(--bark); letter-spacing: 0.06em;
+  }
+
+  .appt-section { background: var(--cream); }
+  .appt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; margin-top: 3rem; align-items: start; }
+  .appt-form-card {
+    background: var(--white); border: 1px solid rgba(196,136,90,0.2);
+    border-radius: 6px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(44,26,14,0.05);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--bark); margin-bottom: 0.4rem; font-weight: 500;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 10px 14px; font-family: 'Jost', sans-serif; font-size: 0.9rem;
+    color: var(--text-dark); background: transparent;
+    border: 1.5px solid rgba(196,136,90,0.25); border-radius: 3px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--bark);
+  }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .appt-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--earth-deep); margin-bottom: 1.2rem; }
+  .appt-info p { color: var(--text-soft); font-size: 0.92rem; line-height: 1.8; margin-bottom: 2rem; }
+  .process-steps { display: flex; flex-direction: column; gap: 1.5rem; }
+  .process-step { display: flex; gap: 1.2rem; align-items: flex-start; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%; background: var(--earth-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .step-text h4 { font-size: 0.92rem; font-weight: 600; color: var(--earth-deep); margin-bottom: 0.3rem; }
+  .step-text p { font-size: 0.82rem; color: var(--text-soft); line-height: 1.6; }
+
+  .org-section { background: linear-gradient(135deg, var(--earth-deep) 60%, var(--earth-warm)); padding: 100px 5vw; }
+  .org-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5vw; align-items: center; margin-top: 3rem; }
+  .org-section .section-tag { color: var(--gold); }
+  .org-section .section-title { color: var(--sand); }
+  .org-section .section-sub { color: rgba(232,201,160,0.65); }
+  .org-section .divider { background: var(--gold); }
+  .org-types { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .org-type {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15);
+    padding: 1.5rem; border-radius: 4px; text-align: center;
+  }
+  .org-type-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .org-type h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--sand); margin-bottom: 0.4rem; }
+  .org-type p { font-size: 0.8rem; color: rgba(232,201,160,0.5); }
+  .org-metrics { display: flex; flex-direction: column; gap: 1.5rem; }
+  .org-m-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.82rem; color: rgba(232,201,160,0.6); margin-bottom: 0.5rem;
+  }
+  .org-m-label span:last-child { color: var(--gold); }
+  .org-m-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+  .org-m-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--sage)); border-radius: 3px; }
+
+  .blog-section { background: var(--cream); }
+  .blogs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3rem; }
+  .blog-card { cursor: pointer; }
+  .blog-img {
+    width: 100%; aspect-ratio: 16/9; border-radius: 4px; overflow: hidden;
+    background: linear-gradient(135deg, rgba(196,136,90,0.15), rgba(122,158,126,0.1));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; margin-bottom: 1.2rem; transition: transform 0.3s;
+  }
+  .blog-card:hover .blog-img { transform: scale(1.02); }
+  .blog-tag-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 0.72rem;
+    background: rgba(201,168,76,0.15); color: var(--bark); margin-bottom: 0.7rem; letter-spacing: 0.06em;
+  }
+  .blog-card h3 {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--earth-deep);
+    line-height: 1.4; margin-bottom: 0.6rem;
+  }
+  .blog-card p { font-size: 0.84rem; color: var(--text-soft); line-height: 1.7; margin-bottom: 0.8rem; }
+  .blog-meta { font-size: 0.76rem; color: var(--text-soft); }
+
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(44,26,14,0.7); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--white); border-radius: 8px; width: min(480px, 90vw);
+    padding: 3rem; position: relative;
+    transform: translateY(20px); transition: transform 0.3s;
+  }
+  .modal-overlay.active .modal { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1.5rem; background: none; border: none;
+    font-size: 1.5rem; cursor: pointer; color: var(--text-soft);
+  }
+  .modal-logo {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 600;
+    color: var(--earth-deep); text-align: center; margin-bottom: 0.4rem;
+  }
+  .modal-sub { text-align: center; font-size: 0.85rem; color: var(--text-soft); margin-bottom: 2rem; }
+  .modal-tabs { display: flex; border-bottom: 2px solid var(--sand); margin-bottom: 2rem; }
+  .modal-tab {
+    flex: 1; padding: 0.8rem; text-align: center; cursor: pointer;
+    font-size: 0.85rem; letter-spacing: 0.06em; color: var(--text-soft);
+    border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s;
+  }
+  .modal-tab.active { color: var(--bark); border-bottom-color: var(--bark); }
+  .modal-form { display: none; }
+  .modal-form.active { display: block; }
+  .auth-success {
+    text-align: center; padding: 2rem 0; display: none;
+  }
+  .auth-success.show { display: block; }
+  .auth-success-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .auth-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--earth-deep); margin-bottom: 0.5rem; }
+  .auth-success p { color: var(--text-soft); font-size: 0.9rem; }
+
+  footer { background: #160D06; padding: 60px 5vw 30px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand .logo { color: var(--sand); font-size: 1.5rem; margin-bottom: 1rem; display: block; }
+  .footer-brand p { font-size: 0.85rem; color: rgba(232,201,160,0.4); line-height: 1.8; }
+  .footer-col h4 { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.6rem; }
+  .footer-col ul li a { text-decoration: none; font-size: 0.85rem; color: rgba(232,201,160,0.4); transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--sand); }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.1); padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(232,201,160,0.3); }
+
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .scroll-top {
+    position: fixed; bottom: 2rem; right: 2rem;
+    width: 44px; height: 44px; background: var(--earth-deep);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 90; border: none;
+    color: var(--gold); font-size: 1.2rem; box-shadow: 0 4px 16px rgba(44,26,14,0.3);
+    opacity: 0; transition: opacity 0.3s, transform 0.2s;
+  }
+  .scroll-top.show { opacity: 1; }
+  .scroll-top:hover { transform: translateY(-3px); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger span { width: 24px; height: 1.5px; background: var(--earth-deep); transition: all 0.3s; }
+  @media (max-width: 1200px) {
+    .hero {
+      min-height: auto;
+      align-items: flex-start;
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+    .hero-content {
+      max-width: 100%;
+    }
+    .hero-btns {
+      margin-bottom: 2.5rem;
+    }
+    .hero-stats {
+      position: static;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .stat {
+      min-width: 160px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none; position: fixed; top: 70px; left: 0; right: 0;
+      background: var(--cream); flex-direction: column; padding: 2rem 5vw;
+      border-bottom: 1px solid rgba(196,136,90,0.2); gap: 1rem;
+    }
+    .nav-links.open { display: flex; }
+    .hero-visual { display: none; }
+    .hero h1 { font-size: 2.8rem; }
+    .about-grid, .assessment-wrapper, .appt-grid, .org-grid, .footer-grid { grid-template-columns: 1fr; }
+    .services-grid, .reco-grid, .blogs-grid { grid-template-columns: 1fr 1fr; }
+    .dash-metrics { grid-template-columns: 1fr 1fr 1fr; }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
+    }
+  }
+  @media (max-width: 600px) {
+    .services-grid, .reco-grid, .blogs-grid, .dash-metrics { grid-template-columns: 1fr; }
+    .science-pillars, .org-types, .form-row { grid-template-columns: 1fr; }
+    .quiz-nav, .dash-header { flex-direction: column; align-items: stretch; }
+    .modal { padding: 2rem 1.5rem; }
+    .hero {
+      padding-bottom: 90px;
+    }
+    .hero-btns {
+      flex-direction: column;
+    }
+    .hero-btns .btn-primary,
+    .hero-btns .btn-outline {
+      width: 100%;
+      text-align: center;
+    }
+    .hero-stats {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .stat h3 {
+      font-size: 2rem;
+    }
+  }
+
+  .toast {
+    position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--earth-deep); color: var(--sand); padding: 12px 24px;
+    border-radius: 4px; font-size: 0.88rem; letter-spacing: 0.04em;
+    opacity: 0; transition: all 0.3s; z-index: 200; white-space: nowrap;
+    border-left: 3px solid var(--gold); max-width: calc(100vw - 2rem); overflow: hidden; text-overflow: ellipsis;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<nav id="mainNav">
+  <a href="#" class="logo">
+    <svg class="logo-icon" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="14" stroke="#C9A84C" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="9" stroke="#8B5A2B" stroke-width="1"/>
+      <circle cx="16" cy="16" r="4" fill="#C9A84C"/>
+      <line x1="16" y1="2" x2="16" y2="30" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+      <line x1="2" y1="16" x2="30" y2="16" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+    </svg>
+    PranaVeda
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">Science</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#assessment">Assessment</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#appointment">Book Now</a></li>
+    <li><a href="#blog">Knowledge</a></li>
+    <li><a href="#" class="nav-cta" onclick="openModal(event)">Sign In</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-circle"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Quantum · Ayurveda · AI Wellness</div>
+    <h1>Understand Your <em>True</em> Wellness — Body, Mind & Soul</h1>
+    <p>PranaVeda offers non-invasive, science-backed wellness assessments integrating ancient Ayurvedic wisdom with modern AI diagnostics to deliver your complete wellness blueprint.</p>
+    <div class="hero-btns">
+      <a href="#assessment" class="btn-primary">Start Assessment</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="wellness-orb">
+      <div class="orb-inner">
+        <div class="orb-text">Prana<br>Score<br><strong style="font-size:1.8em;font-weight:600;">84</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><h3>5000+</h3><p>Assessments Done</p></div>
+    <div class="stat"><h3>98%</h3><p>Satisfaction Rate</p></div>
+    <div class="stat"><h3>120+</h3><p>Institutions Served</p></div>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <div class="about-grid">
+    <div>
+      <span class="section-tag">The Science Behind PranaVeda</span>
+      <h2 class="section-title">Where Ancient Wisdom Meets Modern Diagnostics</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Our assessments are grounded in energy-based diagnostics inspired by quantum mechanics, combined with the timeless principles of Ayurveda, acupressure, and AI-powered pattern recognition.</p>
+      <div class="science-pillars">
+        <div class="pillar"><div class="pillar-icon">⚛️</div><h4>Quantum Diagnostics</h4><p>Non-invasive energy field analysis using cutting-edge bio-resonance principles.</p></div>
+        <div class="pillar"><div class="pillar-icon">🌿</div><h4>Ayurveda Integration</h4><p>Prakriti analysis and dosha balancing aligned with your constitution.</p></div>
+        <div class="pillar"><div class="pillar-icon">🤖</div><h4>AI Intelligence</h4><p>Machine learning models trained on thousands of wellness profiles for precision insights.</p></div>
+        <div class="pillar"><div class="pillar-icon">👐</div><h4>Acupressure Mapping</h4><p>Energy meridian assessment to identify blockages and imbalances.</p></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="mandala">
+        <div class="mandala-ring"></div>
+        <div class="mandala-ring"></div>
+        <div class="mandala-ring"></div>
+        <div class="mandala-center">🕉️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services-section" id="services">
+  <span class="section-tag">What We Offer</span>
+  <h2 class="section-title">Comprehensive Wellness Services</h2>
+  <div class="divider"></div>
+  <p class="section-sub">From individual deep-dive assessments to complete organizational wellness programs, PranaVeda covers every dimension of well-being.</p>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-num">01</div>
+      <div class="service-icon">🧘</div>
+      <h3>Individual Wellness Assessment</h3>
+      <p>A complete in-person assessment covering physical, mental, emotional, and energetic dimensions with a personalized wellness report.</p>
+      <span class="service-tag">In-Person · 90 min</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">02</div>
+      <div class="service-icon">🏢</div>
+      <h3>Organizational Wellness Index</h3>
+      <p>Evaluate and improve the wellness ecosystem of schools, universities, and corporates with our structured Wellness Index program.</p>
+      <span class="service-tag">Enterprise · Custom</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">03</div>
+      <div class="service-icon">🧬</div>
+      <h3>Deep-Dive Health Profiling</h3>
+      <p>Comprehensive quantum energy diagnostics and bio-energetic profiling for detailed lifestyle and nutrition recommendations.</p>
+      <span class="service-tag">Advanced · 2 hrs</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">04</div>
+      <div class="service-icon">🌱</div>
+      <h3>Lifestyle Coaching Program</h3>
+      <p>6-week guided transformation program with weekly sessions, personalized plans, and AI-tracked progress monitoring.</p>
+      <span class="service-tag">Program · 6 Weeks</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">05</div>
+      <div class="service-icon">🧠</div>
+      <h3>Mental Wellness Audit</h3>
+      <p>Targeted assessment of stress, cognitive patterns, emotional intelligence, and mental resilience with actionable insights.</p>
+      <span class="service-tag">Focused · 60 min</span>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-num">06</div>
+      <div class="service-icon">✨</div>
+      <h3>Energy Alignment Session</h3>
+      <p>Acupressure-based energy meridian clearing and chakra balancing session guided by your wellness report findings.</p>
+      <span class="service-tag">Healing · 75 min</span>
+    </div>
+  </div>
+</section>
+
+<section class="assessment-section" id="assessment">
+  <span class="section-tag">Simulated Assessment</span>
+  <h2 class="section-title">Begin Your Wellness Journey</h2>
+  <div class="divider"></div>
+  <div class="assessment-wrapper">
+    <div class="quiz-card">
+      <div class="quiz-progress">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="progress-text" id="progressText">1 / 5</span>
+      </div>
+      <div class="quiz-domains">
+        <span class="domain-chip physical" id="domChip">Physical</span>
+        <span class="domain-chip mental">Mental</span>
+        <span class="domain-chip emotional">Emotional</span>
+      </div>
+      <br>
+      <div class="quiz-category" id="quizCat">Physical Wellness</div>
+      <div class="quiz-q" id="quizQ">How would you rate your average sleep quality over the past month?</div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-nav">
+        <button class="btn-outline" id="prevBtn" onclick="quizPrev()" style="padding:10px 20px;font-size:0.8rem">← Back</button>
+        <button class="btn-primary" id="nextBtn" onclick="quizNext()" style="padding:10px 20px;font-size:0.8rem">Next →</button>
+      </div>
+    </div>
+    <div class="assessment-info">
+      <h3>What Our Assessment Covers</h3>
+      <p>Our multi-dimensional screening covers all aspects of human well-being, generating a personalized Prana Score and actionable recommendations.</p>
+      <div class="assessment-features">
+        <div class="a-feature">
+          <div class="a-feat-icon">💪</div>
+          <div class="a-feat-text"><h4>Physical Wellness</h4><p>Energy levels, sleep, nutrition habits, movement, and body vitality.</p></div>
+        </div>
+        <div class="a-feature">
+          <div class="a-feat-icon">🧠</div>
+          <div class="a-feat-text"><h4>Mental Wellness</h4><p>Stress levels, cognitive clarity, focus, and mental resilience.</p></div>
+        </div>
+        <div class="a-feature">
+          <div class="a-feat-icon">❤️</div>
+          <div class="a-feat-text"><h4>Emotional Wellness</h4><p>Emotional regulation, relationships, purpose, and happiness quotient.</p></div>
+        </div>
+        <div class="a-feature">
+          <div class="a-feat-icon">✨</div>
+          <div class="a-feat-text"><h4>Energetic Wellness</h4><p>Prana flow, chakra balance, and bio-energetic field assessment.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dashboard-section" id="dashboard">
+  <span class="section-tag">Wellness Dashboard</span>
+  <h2 class="section-title">Your Personal Wellness Intelligence</h2>
+  <div class="divider"></div>
+  <div class="dashboard-preview fade-in">
+    <div class="dash-header">
+      <div class="dash-user">
+        <div class="dash-avatar">A</div>
+        <div class="dash-user-info">
+          <h4>Arjun Sharma</h4>
+          <span>Member since Jan 2025</span>
+        </div>
+      </div>
+      <div class="dash-date">Last Assessment: 14 Apr 2025</div>
+    </div>
+    <div class="wellness-index">
+      <div class="wi-score" id="animScore">0</div>
+      <div class="wi-label">Overall Prana Wellness Index</div>
+      <div class="wi-status">✦ Good Wellness Balance</div>
+    </div>
+    <div class="dash-metrics">
+      <div class="metric-card">
+        <div class="metric-name">Physical</div>
+        <div class="metric-score physical">78</div>
+        <div class="metric-bar"><div class="metric-fill physical" id="mf1" style="width:0%"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Mental</div>
+        <div class="metric-score mental">82</div>
+        <div class="metric-bar"><div class="metric-fill mental" id="mf2" style="width:0%"></div></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-name">Emotional</div>
+        <div class="metric-score emotional">91</div>
+        <div class="metric-bar"><div class="metric-fill emotional" id="mf3" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <a href="#" class="btn-primary" onclick="showToast('Full dashboard available after sign-in!'); return false;">View Full Dashboard →</a>
+    </div>
+  </div>
+</section>
+
+<section class="reco-section" id="recommendations">
+  <span class="section-tag">AI Recommendations</span>
+  <h2 class="section-title">Personalized Wellness Pathways</h2>
+  <div class="divider"></div>
+  <div class="reco-grid">
+    <div class="reco-card fade-in">
+      <div class="reco-top nutrition">🥗</div>
+      <div class="reco-body">
+        <h3>Nutrition & Diet</h3>
+        <p>Customized dietary guidance aligned with your Ayurvedic Prakriti type and current dosha imbalance for optimal gut health and energy.</p>
+        <div class="reco-tags">
+          <span class="reco-tag">Vata Balance</span>
+          <span class="reco-tag">Anti-inflammatory</span>
+          <span class="reco-tag">Gut Health</span>
+        </div>
+      </div>
+    </div>
+    <div class="reco-card fade-in">
+      <div class="reco-top lifestyle">🌅</div>
+      <div class="reco-body">
+        <h3>Lifestyle Optimization</h3>
+        <p>Daily routine adjustments, sleep hygiene protocols, and movement schedules tailored to your body's natural rhythms and energy patterns.</p>
+        <div class="reco-tags">
+          <span class="reco-tag">Dinacharya</span>
+          <span class="reco-tag">Sleep Ritual</span>
+          <span class="reco-tag">Movement</span>
+        </div>
+      </div>
+    </div>
+    <div class="reco-card fade-in">
+      <div class="reco-top mindfulness">🧘</div>
+      <div class="reco-body">
+        <h3>Mindfulness & Meditation</h3>
+        <p>Specific pranayama techniques, meditation styles, and mindfulness practices selected based on your mental wellness profile.</p>
+        <div class="reco-tags">
+          <span class="reco-tag">Pranayama</span>
+          <span class="reco-tag">Meditation</span>
+          <span class="reco-tag">Breathwork</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="appt-section" id="appointment">
+  <span class="section-tag">Book a Session</span>
+  <h2 class="section-title">Schedule Your Wellness Assessment</h2>
+  <div class="divider"></div>
+  <div class="appt-grid">
+    <div class="appt-form-card fade-in">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="apptFname" placeholder="Arjun">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="apptLname" placeholder="Sharma">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="apptEmail" placeholder="arjun@email.com">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="apptPhone" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Service Type</label>
+          <select id="apptService">
+            <option>Individual Assessment</option>
+            <option>Deep-Dive Profiling</option>
+            <option>Mental Wellness Audit</option>
+            <option>Energy Alignment</option>
+            <option>Organizational Program</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Preferred Date</label>
+          <input type="date" id="apptDate">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Any health concerns or notes</label>
+        <textarea id="apptNotes" placeholder="Share anything relevant to your wellness journey..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="bookAppointment()">Confirm Booking</button>
+    </div>
+    <div class="appt-info fade-in">
+      <h3>The Assessment Experience</h3>
+      <p>Every session is conducted in-person by our certified wellness practitioners. The assessment is entirely non-invasive and takes about 90 minutes.</p>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <div class="step-text"><h4>Intake & Consultation</h4><p>A brief conversation to understand your health history and wellness goals.</p></div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <div class="step-text"><h4>Multi-Dimensional Assessment</h4><p>Bio-energetic scanning, Ayurvedic analysis, and AI-assisted profiling.</p></div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <div class="step-text"><h4>Wellness Report Generation</h4><p>Instant AI-generated report with your Prana Score and insights.</p></div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <div class="step-text"><h4>Personalized Recommendations</h4><p>Detailed plan covering nutrition, lifestyle, and mindfulness practices.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="org-section" id="organizations">
+  <span class="section-tag">For Organizations</span>
+  <h2 class="section-title">Build a Culture of Wellness</h2>
+  <div class="divider"></div>
+  <div class="org-grid">
+    <div>
+      <p class="section-sub">PranaVeda's Organizational Wellness Index helps institutions measure, track, and improve the overall well-being of their people — driving productivity, engagement, and retention.</p>
+      <br>
+      <div class="org-types">
+        <div class="org-type"><div class="org-type-icon">🎓</div><h4>Universities</h4><p>Student & faculty wellness programs</p></div>
+        <div class="org-type"><div class="org-type-icon">🏭</div><h4>Corporates</h4><p>Employee wellness & performance</p></div>
+        <div class="org-type"><div class="org-type-icon">🏫</div><h4>Schools</h4><p>Holistic child development</p></div>
+        <div class="org-type"><div class="org-type-icon">🏥</div><h4>Healthcare</h4><p>Staff well-being & burnout prevention</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="org-metrics">
+        <div class="org-metric">
+          <div class="org-m-label"><span>Physical Wellness Index</span><span>76%</span></div>
+          <div class="org-m-bar"><div class="org-m-fill" style="width:76%"></div></div>
+        </div>
+        <div class="org-metric">
+          <div class="org-m-label"><span>Mental Resilience Score</span><span>82%</span></div>
+          <div class="org-m-bar"><div class="org-m-fill" style="width:82%"></div></div>
+        </div>
+        <div class="org-metric">
+          <div class="org-m-label"><span>Emotional Intelligence</span><span>68%</span></div>
+          <div class="org-m-bar"><div class="org-m-fill" style="width:68%"></div></div>
+        </div>
+        <div class="org-metric">
+          <div class="org-m-label"><span>Energy & Vitality</span><span>91%</span></div>
+          <div class="org-m-bar"><div class="org-m-fill" style="width:91%"></div></div>
+        </div>
+        <div class="org-metric">
+          <div class="org-m-label"><span>Overall Wellness Index</span><span>79%</span></div>
+          <div class="org-m-bar"><div class="org-m-fill" style="width:79%"></div></div>
+        </div>
+      </div>
+      <br>
+      <a href="#appointment" class="btn-primary">Request Organizational Demo</a>
+    </div>
+  </div>
+</section>
+
+<section class="blog-section" id="blog">
+  <span class="section-tag">Knowledge Hub</span>
+  <h2 class="section-title">Insights from Our Practitioners</h2>
+  <div class="divider"></div>
+  <div class="blogs-grid">
+    <div class="blog-card fade-in" onclick="showToast('Full article coming soon!')">
+      <div class="blog-img">🌿</div>
+      <span class="blog-tag-pill">Ayurveda</span>
+      <h3>Understanding Your Prakriti: The Foundation of Ayurvedic Wellness</h3>
+      <p>Discover how knowing your constitutional type can transform your approach to diet, sleep, and daily routine.</p>
+      <span class="blog-meta">Dr. Meena Kulkarni · 5 min read</span>
+    </div>
+    <div class="blog-card fade-in" onclick="showToast('Full article coming soon!')">
+      <div class="blog-img">⚛️</div>
+      <span class="blog-tag-pill">Quantum Wellness</span>
+      <h3>The Science of Bio-Energetic Assessment: What Quantum Diagnostics Reveals</h3>
+      <p>How energy field analysis goes beyond conventional medical tests to reveal hidden patterns in well-being.</p>
+      <span class="blog-meta">Rahul Vyas, PhD · 7 min read</span>
+    </div>
+    <div class="blog-card fade-in" onclick="showToast('Full article coming soon!')">
+      <div class="blog-img">🧠</div>
+      <span class="blog-tag-pill">Mental Wellness</span>
+      <h3>Corporate Burnout & the Hidden Wellness Crisis in Indian Workplaces</h3>
+      <p>An in-depth look at workplace stress patterns and how organizations can build true resilience cultures.</p>
+      <span class="blog-meta">Priya Nair · 6 min read</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo" style="font-family:'Cormorant Garamond',serif;font-weight:600">PranaVeda</span>
+      <p>Bridging ancient wisdom with modern science to deliver a complete wellness experience. Non-invasive. Holistic. Transformative.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Individual Assessment</a></li>
+        <li><a href="#services">Organizational Wellness</a></li>
+        <li><a href="#services">Deep-Dive Profiling</a></li>
+        <li><a href="#services">Lifestyle Coaching</a></li>
+        <li><a href="#services">Energy Alignment</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#about">Our Science</a></li>
+        <li><a href="#assessment">Assessment</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#recommendations">Recommendations</a></li>
+        <li><a href="#blog">Knowledge Hub</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">hello@pranaveda.in</a></li>
+        <li><a href="#">+91 98765 43210</a></li>
+        <li><a href="#appointment">Book Appointment</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Use</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 PranaVeda Wellness Pvt. Ltd. · All rights reserved.</p>
+    <p>Designed with 🌿 for holistic living</p>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div class="modal-logo">🌿 PranaVeda</div>
+    <p class="modal-sub">Your wellness journey continues here</p>
+    <div class="modal-tabs">
+      <div class="modal-tab active" onclick="switchTab('signin')">Sign In</div>
+      <div class="modal-tab" onclick="switchTab('signup')">Create Account</div>
+    </div>
+    <div class="modal-form active" id="signinForm">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="siEmail" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="siPass" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:0.5rem" onclick="handleAuth('signin')">Sign In to Dashboard</button>
+      <p style="text-align:center;margin-top:1rem;font-size:0.82rem;color:var(--text-soft)">
+        <a href="#" style="color:var(--bark)">Forgot password?</a>
+      </p>
+    </div>
+    <div class="modal-form" id="signupForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="suFname" placeholder="Arjun">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="suLname" placeholder="Sharma">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="suEmail" placeholder="you@email.com">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="suPass" placeholder="Create a strong password">
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:0.5rem" onclick="handleAuth('signup')">Create My Account</button>
+    </div>
+    <div class="auth-success" id="authSuccess">
+      <div class="auth-success-icon">✨</div>
+      <h3>Welcome to PranaVeda!</h3>
+      <p id="authSuccessMsg">Sign in successful. Your wellness dashboard is ready.</p>
+    </div>
+  </div>
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const questions = [
+  { cat:"Physical Wellness", q:"How would you rate your average sleep quality over the past month?", opts:["Excellent — deep, restful, 7-8 hrs","Good — mostly restful with minor issues","Fair — frequently disrupted or insufficient","Poor — consistently bad sleep"] },
+  { cat:"Mental Wellness", q:"How often do you feel mentally overwhelmed or unable to concentrate?", opts:["Rarely — I feel clear and focused","Sometimes — manageable stress levels","Often — mental fog is a common issue","Very often — significant mental burden"] },
+  { cat:"Emotional Wellness", q:"How connected do you feel to a sense of purpose or meaning in daily life?", opts:["Very connected — my life feels purposeful","Mostly connected — occasional doubts","Somewhat disconnected — searching for meaning","Disconnected — feeling lost or unmotivated"] },
+  { cat:"Energetic Wellness", q:"How would you describe your overall energy levels throughout the day?", opts:["Vibrant — high consistent energy","Good — mild afternoon dips","Moderate — often feel fatigued by midday","Low — tired most of the day"] },
+  { cat:"Lifestyle Habits", q:"How would you describe your relationship with physical movement and exercise?", opts:["Active — regular structured exercise","Moderate — light activity most days","Occasional — exercise 1-2 times/week","Sedentary — minimal physical movement"] }
+];
+
+let qIdx = 0;
+let answers = [];
+
+function renderQuiz() {
+  const q = questions[qIdx];
+  document.getElementById("quizCat").textContent = q.cat;
+  document.getElementById("quizQ").textContent = q.q;
+  document.getElementById("progressText").textContent = `${qIdx + 1} / ${questions.length}`;
+  document.getElementById("progressFill").style.width = `${((qIdx + 1) / questions.length) * 100}%`;
+
+  const opts = document.getElementById("quizOpts");
+  opts.innerHTML = "";
+  q.opts.forEach((option, i) => {
+    const btn = document.createElement("button");
+    btn.className = "quiz-opt" + (answers[qIdx] === i ? " selected" : "");
+    btn.textContent = option;
+    btn.onclick = () => {
+      answers[qIdx] = i;
+      renderQuiz();
+    };
+    opts.appendChild(btn);
+  });
+
+  document.getElementById("prevBtn").style.opacity = qIdx === 0 ? "0.4" : "1";
+  document.getElementById("nextBtn").textContent = qIdx === questions.length - 1 ? "View Results ✨" : "Next →";
+}
+
+function quizNext() {
+  if (answers[qIdx] === undefined) {
+    showToast("Please select an answer");
+    return;
+  }
+  if (qIdx < questions.length - 1) {
+    qIdx++;
+    renderQuiz();
+  } else {
+    showQuizResult();
+  }
+}
+
+function quizPrev() {
+  if (qIdx > 0) {
+    qIdx--;
+    renderQuiz();
+  }
+}
+
+function showQuizResult() {
+  const score = Math.round(85 - (answers.reduce((a, b) => a + b, 0) / answers.length) * 8 + Math.random() * 6);
+  const quizCard = document.querySelector(".quiz-card");
+  quizCard.innerHTML = `
+    <div style="text-align:center;padding:1rem 0">
+      <div style="font-size:3rem;margin-bottom:1rem">🌟</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--bark);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem">Your Prana Score</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:var(--earth-deep);line-height:1">${score}</div>
+      <div style="font-size:0.85rem;color:var(--text-soft);margin:1rem 0 2rem">${score >= 80 ? "✦ Excellent Wellness Balance" : score >= 65 ? "✦ Good — Room to Grow" : "✦ Needs Attention — Book a Session"}</div>
+      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);padding:1rem;border-radius:4px;text-align:left;margin-bottom:1.5rem">
+        <p style="font-size:0.85rem;color:var(--text-soft);line-height:1.7">Based on your responses, we recommend focusing on <strong style="color:var(--bark)">${score < 75 ? "sleep & recovery, stress management," : "maintaining your current habits and"}</strong> deepening your mindfulness practice. A full in-person assessment will reveal detailed bio-energetic insights.</p>
+      </div>
+      <a href="#appointment" class="btn-primary" style="display:inline-block">Book Full Assessment →</a>
+      <br><br>
+      <button onclick="qIdx=0;answers=[];renderQuiz()" style="background:none;border:none;color:var(--bark);cursor:pointer;font-size:0.85rem;text-decoration:underline">Retake Assessment</button>
+    </div>`;
+}
+
+renderQuiz();
+
+function animateScore(target) {
+  let current = 0;
+  const step = target / 60;
+  const interval = setInterval(() => {
+    current = Math.min(current + step, target);
+    document.getElementById("animScore").textContent = Math.round(current);
+    if (current >= target) {
+      clearInterval(interval);
+    }
+  }, 16);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      if (entry.target.id === "animScore") {
+        animateScore(84);
+      }
+      if (entry.target.id === "mf1") {
+        setTimeout(() => { entry.target.style.width = "78%"; }, 300);
+      }
+      if (entry.target.id === "mf2") {
+        setTimeout(() => { entry.target.style.width = "82%"; }, 500);
+      }
+      if (entry.target.id === "mf3") {
+        setTimeout(() => { entry.target.style.width = "91%"; }, 700);
+      }
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+["animScore", "mf1", "mf2", "mf3"].forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) {
+    observer.observe(el);
+  }
+});
+
+function openModal(e) {
+  if (e) {
+    e.preventDefault();
+  }
+  document.getElementById("authModal").classList.add("active");
+}
+
+function closeModal() {
+  document.getElementById("authModal").classList.remove("active");
+  document.getElementById("authSuccess").classList.remove("show");
+  document.getElementById("signinForm").classList.add("active");
+  document.getElementById("signupForm").classList.remove("active");
+  document.getElementById("signinForm").style.display = "";
+  document.getElementById("signupForm").style.display = "";
+  document.querySelectorAll(".modal-tab, .modal-sub").forEach((el) => {
+    el.style.display = "";
+  });
+  switchTab("signin");
+}
+
+document.getElementById("authModal").addEventListener("click", function (e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+function switchTab(tab) {
+  document.querySelectorAll(".modal-tab").forEach((t, i) => {
+    t.classList.toggle("active", (tab === "signin" && i === 0) || (tab === "signup" && i === 1));
+  });
+  document.getElementById("signinForm").classList.toggle("active", tab === "signin");
+  document.getElementById("signupForm").classList.toggle("active", tab === "signup");
+}
+
+function handleAuth(type) {
+  const emailId = type === "signin" ? "siEmail" : "suEmail";
+  const email = document.getElementById(emailId).value;
+  if (!email) {
+    showToast("Please enter your email");
+    return;
+  }
+  document.getElementById("signinForm").style.display = "none";
+  document.getElementById("signupForm").style.display = "none";
+  document.querySelectorAll(".modal-tab, .modal-sub").forEach((el) => {
+    el.style.display = "none";
+  });
+  const msg = type === "signup" ? `Account created! Welcome to PranaVeda, ${email.split("@")[0]}.` : "Welcome back! Your dashboard is ready.";
+  document.getElementById("authSuccessMsg").textContent = msg;
+  document.getElementById("authSuccess").classList.add("show");
+  setTimeout(closeModal, 2500);
+  showToast(type === "signup" ? "✨ Account created successfully!" : "✦ Signed in to PranaVeda");
+}
+
+function bookAppointment() {
+  const name = document.getElementById("apptFname").value;
+  const email = document.getElementById("apptEmail").value;
+  if (!name || !email) {
+    showToast("Please fill in required fields");
+    return;
+  }
+  showToast(`✦ Appointment booked for ${name}! Confirmation email sent.`);
+  document.getElementById("apptFname").value = "";
+  document.getElementById("apptLname").value = "";
+  document.getElementById("apptEmail").value = "";
+  document.getElementById("apptPhone").value = "";
+  document.getElementById("apptNotes").value = "";
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+window.addEventListener("scroll", () => {
+  document.getElementById("scrollTop").classList.toggle("show", window.scrollY > 400);
+});
+
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("open");
+}
+
+window.addEventListener("scroll", () => {
+  document.getElementById("mainNav").style.boxShadow = window.scrollY > 20 ? "0 4px 20px rgba(44,26,14,0.08)" : "none";
+});
+</script>
+</body>
+</html>
