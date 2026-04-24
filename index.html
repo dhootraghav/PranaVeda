@@ -148,7 +148,7 @@
     gap: 10px;
     min-height: 52px;
     padding: 0 26px;
-    border-radius: 999px;
+    border-radius: 2px;
     border: 1px solid transparent;
     cursor: pointer;
     transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
@@ -166,7 +166,7 @@
   .btn-secondary {
     border-color: var(--line-strong);
     color: var(--text);
-    background: rgba(255, 255, 255, 0.45);
+    background: transparent;
   }
   .btn-ghost {
     border-color: rgba(255, 255, 255, 0.15);
@@ -175,7 +175,30 @@
   }
 
   .hero {
-    padding: 52px 0 74px;
+    position: relative;
+    padding: 60px 0 92px;
+    overflow: hidden;
+  }
+  .hero::before,
+  .hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::before {
+    width: 760px;
+    height: 760px;
+    right: -180px;
+    top: -160px;
+    border: 1px solid rgba(196, 136, 90, 0.14);
+  }
+  .hero::after {
+    width: 500px;
+    height: 500px;
+    right: -40px;
+    top: -10px;
+    border: 1px solid rgba(203, 162, 79, 0.12);
   }
   .hero-grid {
     display: grid;
@@ -186,14 +209,15 @@
   .hero-copy {
     position: relative;
     padding: 24px 0 0;
+    z-index: 1;
   }
   .hero-copy h1 {
     margin-top: 22px;
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(3.6rem, 7vw, 7.2rem);
-    line-height: 0.93;
+    font-size: clamp(3.2rem, 6.8vw, 6.4rem);
+    line-height: 1.02;
     letter-spacing: -0.04em;
-    font-weight: 600;
+    font-weight: 400;
   }
   .hero-copy h1 em {
     font-style: italic;
@@ -202,9 +226,9 @@
   }
   .hero-copy p {
     margin-top: 22px;
-    max-width: 720px;
-    font-size: 1.08rem;
-    line-height: 1.9;
+    max-width: 760px;
+    font-size: 1.04rem;
+    line-height: 1.82;
     color: var(--text-soft);
   }
   .hero-actions {
@@ -214,22 +238,23 @@
     gap: 14px;
   }
   .hero-insight {
-    margin-top: 34px;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    margin-top: 42px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 34px;
   }
   .mini-panel {
-    background: rgba(255, 253, 249, 0.74);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 18px;
-    box-shadow: var(--shadow);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    min-width: 150px;
   }
   .mini-panel strong {
     display: block;
     font-family: "Cormorant Garamond", serif;
-    font-size: 2.4rem;
+    font-size: 2.7rem;
     line-height: 1;
     margin-bottom: 8px;
   }
@@ -244,6 +269,7 @@
     position: relative;
     display: grid;
     gap: 18px;
+    z-index: 1;
   }
   .spotlight-card {
     position: relative;
@@ -763,6 +789,115 @@
     outline: none;
   }
   .field textarea { resize: vertical; min-height: 112px; }
+  .booking-reality {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(110, 75, 40, 0.14);
+    background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,241,231,0.92));
+  }
+  .booking-reality h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+  .booking-reality p {
+    color: var(--text-soft);
+    line-height: 1.7;
+    font-size: 0.92rem;
+  }
+  .slot-grid {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .slot-btn {
+    width: 100%;
+    padding: 14px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(110, 75, 40, 0.16);
+    background: #fffdfa;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: var(--text);
+  }
+  .slot-btn small {
+    display: block;
+    color: var(--text-soft);
+    margin-top: 4px;
+    font-size: 0.78rem;
+  }
+  .slot-btn.active,
+  .slot-btn:hover {
+    border-color: rgba(63, 104, 82, 0.48);
+    background: rgba(110, 145, 117, 0.08);
+  }
+  .slot-btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .live-status {
+    margin-top: 16px;
+    display: none;
+    gap: 12px;
+    align-items: center;
+    color: var(--text-soft);
+    font-size: 0.92rem;
+  }
+  .live-status.show {
+    display: flex;
+  }
+  .live-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 6px rgba(203, 162, 79, 0.14);
+    animation: pulseLive 1.2s infinite;
+  }
+  @keyframes pulseLive {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    50% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.9; }
+  }
+  .booking-confirmation {
+    margin-top: 18px;
+    display: none;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(110, 145, 117, 0.22);
+    background: rgba(110, 145, 117, 0.08);
+  }
+  .booking-confirmation.show {
+    display: block;
+  }
+  .booking-confirmation h4 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.7rem;
+    margin-bottom: 8px;
+  }
+  .confirmation-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .confirmation-item {
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.62);
+    border: 1px solid rgba(110, 145, 117, 0.16);
+  }
+  .confirmation-item span {
+    display: block;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6c815e;
+    margin-bottom: 4px;
+  }
   .timeline {
     display: grid;
     gap: 14px;
@@ -985,6 +1120,8 @@
     .org-grid,
     .profile-grid,
     .form-grid,
+    .slot-grid,
+    .confirmation-grid,
     .score-hero,
     .spotlight-grid {
       grid-template-columns: 1fr;
@@ -1105,6 +1242,11 @@
                 <label>Emotional</label>
                 <strong>91</strong>
               </div>
+            </div>
+
+            <div style="margin-top:18px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.05);border-radius:18px;">
+              <div style="font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,232,204,0.62);margin-bottom:8px;">In-person service promise</div>
+              <div style="color:rgba(247,232,204,0.86);line-height:1.72;">Every assessment is conducted physically at our wellness center or partner location and followed by a practitioner-reviewed report.</div>
             </div>
           </div>
 
@@ -1478,6 +1620,44 @@
               <div class="field">
                 <label for="notes">Health Concerns or Notes</label>
                 <textarea id="notes" placeholder="Share anything relevant to your wellness journey or institutional wellness goals."></textarea>
+              </div>
+              <input id="selectedSlot" type="hidden">
+
+              <div class="booking-reality">
+                <h4>Live appointment availability</h4>
+                <p>Choose a currently available slot. We’ll simulate practitioner availability checks, reserve your slot, and generate a booking reference.</p>
+                <div class="slot-grid" id="slotGrid">
+                  <button class="slot-btn" type="button" data-slot="09:30 AM" data-practitioner="Dr. Meena Kulkarni">09:30 AM<small>Dr. Meena Kulkarni • 2 seats left</small></button>
+                  <button class="slot-btn" type="button" data-slot="11:00 AM" data-practitioner="Rahul Vyas">11:00 AM<small>Rahul Vyas • 1 seat left</small></button>
+                  <button class="slot-btn" type="button" data-slot="02:30 PM" data-practitioner="Priya Nair">02:30 PM<small>Priya Nair • Fastest confirmation</small></button>
+                  <button class="slot-btn" type="button" data-slot="05:00 PM" data-practitioner="Dr. Meena Kulkarni">05:00 PM<small>Dr. Meena Kulkarni • Evening slot</small></button>
+                </div>
+                <div class="live-status" id="liveStatus">
+                  <span class="live-dot"></span>
+                  <span id="liveStatusText">Checking practitioner availability...</span>
+                </div>
+                <div class="booking-confirmation" id="bookingConfirmation">
+                  <h4>Appointment reserved</h4>
+                  <p>Your booking is provisionally held and a confirmation email/SMS simulation has been triggered.</p>
+                  <div class="confirmation-grid">
+                    <div class="confirmation-item">
+                      <span>Booking ID</span>
+                      <strong id="confirmId">PV-0000</strong>
+                    </div>
+                    <div class="confirmation-item">
+                      <span>Practitioner</span>
+                      <strong id="confirmPractitioner">Dr. Meena Kulkarni</strong>
+                    </div>
+                    <div class="confirmation-item">
+                      <span>Session Slot</span>
+                      <strong id="confirmSlot">09:30 AM</strong>
+                    </div>
+                    <div class="confirmation-item">
+                      <span>Arrival Window</span>
+                      <strong id="confirmArrival">15 minutes early</strong>
+                    </div>
+                  </div>
+                </div>
               </div>
               <button class="btn btn-primary" type="submit">Confirm Booking</button>
             </form>
@@ -1894,7 +2074,32 @@
     }
 
     const bookingForm = document.getElementById("bookingForm");
-    bookingForm.addEventListener("submit", (event) => {
+    const slotButtons = Array.from(document.querySelectorAll(".slot-btn"));
+    const selectedSlotInput = document.getElementById("selectedSlot");
+    const liveStatus = document.getElementById("liveStatus");
+    const liveStatusText = document.getElementById("liveStatusText");
+    const bookingConfirmation = document.getElementById("bookingConfirmation");
+    const confirmId = document.getElementById("confirmId");
+    const confirmPractitioner = document.getElementById("confirmPractitioner");
+    const confirmSlot = document.getElementById("confirmSlot");
+    const confirmArrival = document.getElementById("confirmArrival");
+    let selectedSlotMeta = null;
+
+    slotButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        slotButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        selectedSlotMeta = {
+          slot: button.dataset.slot,
+          practitioner: button.dataset.practitioner
+        };
+        selectedSlotInput.value = selectedSlotMeta.slot;
+        bookingConfirmation.classList.remove("show");
+        showToast(`Selected ${selectedSlotMeta.slot} with ${selectedSlotMeta.practitioner}.`);
+      });
+    });
+
+    bookingForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const firstName = document.getElementById("firstName").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -1906,9 +2111,34 @@
         return;
       }
 
-      saveBookingHistory(firstName, service, date);
+      if (!selectedSlotMeta) {
+        showToast("Please choose an available slot first.");
+        return;
+      }
+
+      liveStatus.classList.add("show");
+      liveStatusText.textContent = `Checking practitioner availability for ${selectedSlotMeta.slot}...`;
+
+      await wait(900);
+      liveStatusText.textContent = "Holding your slot and preparing confirmation...";
+      await wait(900);
+      liveStatusText.textContent = "Confirmation in progress. Sending email and SMS simulation...";
+      await wait(900);
+
+      const bookingId = `PV-${Math.floor(1000 + Math.random() * 9000)}`;
+      confirmId.textContent = bookingId;
+      confirmPractitioner.textContent = selectedSlotMeta.practitioner;
+      confirmSlot.textContent = `${date || "Next available date"} • ${selectedSlotMeta.slot}`;
+      confirmArrival.textContent = service === "Organizational Wellness Index" ? "Coordinator call within 2 hours" : "15 minutes early";
+      bookingConfirmation.classList.add("show");
+      liveStatus.classList.remove("show");
+
+      saveBookingHistory(firstName, service, date, selectedSlotMeta.slot, bookingId);
+      showToast(`Booking confirmed for ${firstName}. Reference: ${bookingId}.`);
       bookingForm.reset();
-      showToast(`Appointment request received for ${firstName}.`);
+      selectedSlotInput.value = "";
+      selectedSlotMeta = null;
+      slotButtons.forEach((item) => item.classList.remove("active"));
     });
 
     function saveAssessmentHistory(score) {
@@ -1923,16 +2153,20 @@
       renderHistory();
     }
 
-    function saveBookingHistory(name, service, date) {
+    function saveBookingHistory(name, service, date, slot, bookingId) {
       const rows = JSON.parse(localStorage.getItem("pranaveda-history") || "[]");
       rows.unshift({
         date: date || new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
-        type: service,
-        score: "Pending",
+        type: `${service} • ${slot}`,
+        score: bookingId,
         status: "Booked"
       });
       localStorage.setItem("pranaveda-history", JSON.stringify(rows.slice(0, 6)));
       renderHistory();
+    }
+
+    function wait(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     function renderHistory() {
