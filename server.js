@@ -11,8 +11,9 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
-const DATA_DIR = path.join(ROOT, "data");
-const EMAIL_DIR = path.join(ROOT, "email_previews");
+const RUNTIME_BASE = process.env.VERCEL ? path.join("/tmp", "pranaveda-runtime") : ROOT;
+const DATA_DIR = path.join(RUNTIME_BASE, "data");
+const EMAIL_DIR = path.join(RUNTIME_BASE, "email_previews");
 const DB_PATH = path.join(DATA_DIR, "pranaveda.db");
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -512,13 +513,19 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(ROOT, "index.html"));
 });
 
-initDb()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`PranaVeda app running on http://localhost:${PORT}`);
+const ready = initDb();
+
+if (require.main === module) {
+  ready
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`PranaVeda app running on http://localhost:${PORT}`);
+      });
+    })
+    .catch((error) => {
+      console.error("Failed to initialize app", error);
+      process.exit(1);
     });
-  })
-  .catch((error) => {
-    console.error("Failed to initialize app", error);
-    process.exit(1);
-  });
+}
+
+module.exports = { app, ready };
