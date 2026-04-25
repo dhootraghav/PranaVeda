@@ -314,7 +314,16 @@ app.post("/api/auth/signup", async (req, res) => {
 
     req.session.userId = result.id;
     const user = await get(`SELECT id, first_name, last_name, email, created_at FROM users WHERE id = ?`, [result.id]);
-    res.json({ ok: true, user });
+    res.json({
+      ok: true,
+      user: {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+        createdAt: user.created_at
+      }
+    });
   } catch (error) {
     res.status(500).json({ error: "Unable to create account right now." });
   }
