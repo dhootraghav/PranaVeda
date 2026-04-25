@@ -97,9 +97,9 @@
   }
   .nav-wrap {
     min-height: 78px;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: 24px;
   }
   .brand {
@@ -125,6 +125,8 @@
     list-style: none;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 24px;
     color: var(--text-soft);
     font-size: 0.92rem;
@@ -133,6 +135,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    justify-self: end;
   }
   .nav-toggle {
     display: none;
@@ -1079,6 +1082,73 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    background: rgba(36, 20, 11, 0.7);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    width: min(540px, calc(100vw - 32px));
+    background: var(--panel);
+    border-radius: 24px;
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 60px rgba(36, 20, 11, 0.2);
+    padding: 30px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    border: 0;
+    background: none;
+    color: var(--text-soft);
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+  .modal-logo {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 2rem;
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+  }
+  .modal-tab {
+    padding: 12px 16px;
+    cursor: pointer;
+    color: var(--text-soft);
+    border-bottom: 2px solid transparent;
+  }
+  .modal-tab.active {
+    color: var(--text);
+    border-bottom-color: var(--bark);
+  }
+  .modal-form {
+    display: none;
+  }
+  .modal-form.active {
+    display: block;
+  }
 
   @media (max-width: 1100px) {
     .hero-grid,
@@ -1100,7 +1170,7 @@
   }
 
   @media (max-width: 860px) {
-    .nav-wrap { flex-wrap: wrap; padding: 14px 0; }
+    .nav-wrap { display: flex; flex-wrap: wrap; padding: 14px 0; }
     .nav-toggle { display: block; }
     .nav-links {
       display: none;
@@ -1172,13 +1242,14 @@
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#assessment">Assessment</a></li>
-        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="#profiles">Profiles</a></li>
         <li><a href="#organization">Organization</a></li>
         <li><a href="#knowledge">Knowledge Hub</a></li>
       </ul>
 
       <div class="nav-actions">
+        <a class="btn btn-secondary" href="#" id="navAuthButton">Sign In</a>
         <a class="btn btn-secondary" href="#appointment">Book Session</a>
       </div>
     </div>
@@ -1452,36 +1523,36 @@
           <div class="dashboard-panel">
             <div class="dashboard-top">
               <div class="profile-chip">
-                <div class="avatar">A</div>
+                <div class="avatar" id="dashboardAvatar">A</div>
                 <div>
-                  <strong style="display:block;font-size:1rem;">Arjun Sharma</strong>
-                  <span style="color:rgba(248,236,214,0.62);font-size:0.86rem;">Member since January 2025</span>
+                  <strong id="dashboardName" style="display:block;font-size:1rem;">Arjun Sharma</strong>
+                  <span id="dashboardMemberSince" style="color:rgba(248,236,214,0.62);font-size:0.86rem;">Member since January 2025</span>
                 </div>
               </div>
-              <div style="color:rgba(248,236,214,0.6);font-size:0.86rem;">Last report updated: 24 April 2026</div>
+              <div id="dashboardUpdatedAt" style="color:rgba(248,236,214,0.6);font-size:0.86rem;">Last report updated: 24 April 2026</div>
             </div>
 
             <div class="score-hero">
               <div class="score-card">
                 <strong id="dashboardScore">84</strong>
                 <span>Overall Prana Index</span>
-                <div class="score-status">Good wellness balance</div>
+                <div class="score-status" id="dashboardStatus">Good wellness balance</div>
               </div>
               <div class="metric-stack">
                 <div class="metric-row">
-                  <header><span>Physical Wellness</span><span>78</span></header>
+                  <header><span>Physical Wellness</span><span id="metricPhysicalValue">78</span></header>
                   <div class="bar bar-physical"><span id="dashBar1"></span></div>
                 </div>
                 <div class="metric-row">
-                  <header><span>Mental Clarity</span><span>82</span></header>
+                  <header><span>Mental Clarity</span><span id="metricMentalValue">82</span></header>
                   <div class="bar bar-mental"><span id="dashBar2"></span></div>
                 </div>
                 <div class="metric-row">
-                  <header><span>Emotional Stability</span><span>91</span></header>
+                  <header><span>Emotional Stability</span><span id="metricEmotionalValue">91</span></header>
                   <div class="bar bar-emotional"><span id="dashBar3"></span></div>
                 </div>
                 <div class="metric-row">
-                  <header><span>Energy Flow</span><span>76</span></header>
+                  <header><span>Energy Flow</span><span id="metricEnergyValue">76</span></header>
                   <div class="bar bar-energy"><span id="dashBar4"></span></div>
                 </div>
               </div>
@@ -1491,7 +1562,7 @@
           <div class="chart-card">
             <div class="chart-box">
               <h3>Report Highlights</h3>
-              <p style="color:rgba(248,236,214,0.72);line-height:1.8;">Your best-performing area is emotional balance. The biggest gains are likely to come from stronger sleep recovery, structured movement, and consistent breathwork practice.</p>
+              <p id="dashboardSummary" style="color:rgba(248,236,214,0.72);line-height:1.8;">Your best-performing area is emotional balance. The biggest gains are likely to come from stronger sleep recovery, structured movement, and consistent breathwork practice.</p>
               <div class="chart-grid">
                 <div class="chart-item">
                   <div>
@@ -1655,6 +1726,10 @@
                     <div class="confirmation-item">
                       <span>Arrival Window</span>
                       <strong id="confirmArrival">15 minutes early</strong>
+                    </div>
+                    <div class="confirmation-item">
+                      <span>Email Preview</span>
+                      <strong><a id="confirmEmailPreview" href="#" target="_blank" style="text-transform:none;font-size:0.92rem;">Available after booking</a></strong>
                     </div>
                   </div>
                 </div>
@@ -1890,7 +1965,7 @@
           <ul>
             <li>hello@pranaveda.in</li>
             <li>+91 98765 43210</li>
-            <li>Bengaluru, India</li>
+            <li>Pune, India</li>
             <li>Mon-Sat • 9:00 AM to 7:00 PM</li>
           </ul>
         </div>
@@ -1903,13 +1978,53 @@
     </div>
   </footer>
 
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <button class="modal-close" type="button" id="modalClose">×</button>
+      <div class="modal-logo">PranaVeda</div>
+      <p class="modal-sub">Create a real account or sign in to view your persisted dashboard, bookings, confirmations, and assessment history.</p>
+      <div class="modal-tabs">
+        <div class="modal-tab active" data-tab="signin">Sign In</div>
+        <div class="modal-tab" data-tab="signup">Create Account</div>
+      </div>
+      <div class="modal-form active" id="signinForm">
+        <div class="field">
+          <label for="signinEmail">Email Address</label>
+          <input id="signinEmail" type="email" placeholder="you@email.com">
+        </div>
+        <div class="field">
+          <label for="signinPassword">Password</label>
+          <input id="signinPassword" type="password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-primary" type="button" id="signinBtn" style="width:100%;margin-top:6px;">Sign In</button>
+      </div>
+      <div class="modal-form" id="signupForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="signupFirstName">First Name</label>
+            <input id="signupFirstName" type="text" placeholder="Arjun">
+          </div>
+          <div class="field">
+            <label for="signupLastName">Last Name</label>
+            <input id="signupLastName" type="text" placeholder="Sharma">
+          </div>
+        </div>
+        <div class="field">
+          <label for="signupEmail">Email Address</label>
+          <input id="signupEmail" type="email" placeholder="you@email.com">
+        </div>
+        <div class="field">
+          <label for="signupPassword">Password</label>
+          <input id="signupPassword" type="password" placeholder="Create a strong password">
+        </div>
+        <button class="btn btn-primary" type="button" id="signupBtn" style="width:100%;margin-top:6px;">Create Account</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
-    const navToggle = document.getElementById("navToggle");
-    const navLinks = document.getElementById("navLinks");
-    navToggle.addEventListener("click", () => navLinks.classList.toggle("open"));
-
     const questions = [
       {
         category: "Physical Wellness",
@@ -1963,92 +2078,298 @@
       }
     ];
 
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+    const navAuthButton = document.getElementById("navAuthButton");
+    const authModal = document.getElementById("authModal");
+    const modalClose = document.getElementById("modalClose");
+    const bookingForm = document.getElementById("bookingForm");
+    const slotButtons = Array.from(document.querySelectorAll(".slot-btn"));
+    const selectedSlotInput = document.getElementById("selectedSlot");
+    const liveStatus = document.getElementById("liveStatus");
+    const liveStatusText = document.getElementById("liveStatusText");
+    const bookingConfirmation = document.getElementById("bookingConfirmation");
+    const confirmId = document.getElementById("confirmId");
+    const confirmPractitioner = document.getElementById("confirmPractitioner");
+    const confirmSlot = document.getElementById("confirmSlot");
+    const confirmArrival = document.getElementById("confirmArrival");
+    const confirmEmailPreview = document.getElementById("confirmEmailPreview");
+    const historyTableBody = document.querySelector("#historyTable tbody");
     let currentQuestion = 0;
     let answers = [];
+    let selectedSlotMeta = null;
+    let currentUser = null;
 
-    function renderQuiz() {
-      const quizCategory = document.getElementById("quizCategory");
-      const quizQuestion = document.getElementById("quizQuestion");
-      const quizOptions = document.getElementById("quizOptions");
-      const quizCount = document.getElementById("quizCount");
-      const quizProgress = document.getElementById("quizProgress");
-      const quizPrev = document.getElementById("quizPrev");
-      const quizNext = document.getElementById("quizNext");
-      const item = questions[currentQuestion];
-      quizCategory.textContent = item.category;
-      quizQuestion.textContent = item.question;
-      quizCount.textContent = `${currentQuestion + 1} / ${questions.length}`;
-      quizProgress.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-      quizPrev.style.opacity = currentQuestion === 0 ? "0.45" : "1";
-      quizNext.textContent = currentQuestion === questions.length - 1 ? "View Results" : "Next";
+    navToggle.addEventListener("click", () => navLinks.classList.toggle("open"));
+    navAuthButton.addEventListener("click", async (event) => {
+      event.preventDefault();
+      if (currentUser) {
+        await api("/api/auth/signout", { method: "POST" });
+        currentUser = null;
+        updateAuthUI();
+        setSampleDashboard();
+        renderHistory([], []);
+        showToast("Signed out successfully.");
+        return;
+      }
+      openModal();
+    });
 
-      quizOptions.innerHTML = "";
-      item.options.forEach((option, index) => {
-        const button = document.createElement("button");
-        button.className = "option" + (answers[currentQuestion] === index ? " selected" : "");
-        button.type = "button";
-        button.textContent = option;
-        button.addEventListener("click", () => {
-          answers[currentQuestion] = index;
-          renderQuiz();
-        });
-        quizOptions.appendChild(button);
+    modalClose.addEventListener("click", closeModal);
+    authModal.addEventListener("click", (event) => {
+      if (event.target === authModal) {
+        closeModal();
+      }
+    });
+
+    document.querySelectorAll(".modal-tab").forEach((tab) => {
+      tab.addEventListener("click", () => switchTab(tab.dataset.tab));
+    });
+
+    document.getElementById("signinBtn").addEventListener("click", signIn);
+    document.getElementById("signupBtn").addEventListener("click", signUp);
+
+    slotButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        slotButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        selectedSlotMeta = {
+          slot: button.dataset.slot,
+          practitioner: button.dataset.practitioner
+        };
+        selectedSlotInput.value = selectedSlotMeta.slot;
+        bookingConfirmation.classList.remove("show");
+        showToast(`Selected ${selectedSlotMeta.slot} with ${selectedSlotMeta.practitioner}.`);
       });
+    });
+
+    bookingForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        firstName: document.getElementById("firstName").value.trim(),
+        lastName: document.getElementById("lastName").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        service: document.getElementById("service").value,
+        preferredDate: document.getElementById("date").value,
+        notes: document.getElementById("notes").value.trim(),
+        slot: selectedSlotMeta ? selectedSlotMeta.slot : "",
+        practitioner: selectedSlotMeta ? selectedSlotMeta.practitioner : ""
+      };
+
+      if (!payload.firstName || !payload.lastName || !payload.email) {
+        showToast("Please complete the required booking fields.");
+        return;
+      }
+
+      if (!selectedSlotMeta) {
+        showToast("Please choose an available slot first.");
+        return;
+      }
+
+      try {
+        liveStatus.classList.add("show");
+        liveStatusText.textContent = `Checking practitioner availability for ${selectedSlotMeta.slot}...`;
+
+        const response = await api("/api/bookings", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
+
+        liveStatus.classList.remove("show");
+        bookingConfirmation.classList.add("show");
+        confirmId.textContent = response.booking.confirmationCode;
+        confirmPractitioner.textContent = response.booking.practitioner;
+        confirmSlot.textContent = `${response.booking.preferredDate || "Next available date"} • ${response.booking.slot}`;
+        confirmArrival.textContent = payload.service === "Organizational Wellness Index" ? "Coordinator call within 2 hours" : "15 minutes early";
+        if (response.booking.previewPath) {
+          confirmEmailPreview.textContent = "Open email preview";
+          confirmEmailPreview.href = response.booking.previewPath;
+        } else {
+          confirmEmailPreview.textContent = "Email sent";
+          confirmEmailPreview.removeAttribute("href");
+        }
+
+        showToast(`Booking confirmed. Reference: ${response.booking.confirmationCode}.`);
+        bookingForm.reset();
+        selectedSlotInput.value = "";
+        selectedSlotMeta = null;
+        slotButtons.forEach((item) => item.classList.remove("active"));
+
+        if (currentUser) {
+          await refreshDashboard();
+        }
+      } catch (error) {
+        liveStatus.classList.remove("show");
+        showToast(error.message || "Unable to confirm booking.");
+      }
+    });
+
+    function openModal() {
+      authModal.classList.add("active");
     }
 
-    function showQuizResults() {
-      const quizShell = document.getElementById("quizShell");
-      const average = answers.reduce((sum, item) => sum + item, 0) / answers.length;
-      const score = Math.max(58, Math.round(88 - average * 8));
-      const label = score >= 82 ? "Balanced and resilient" : score >= 72 ? "Strong foundation with improvement areas" : "Needs deeper support and guided review";
-      const focus = score >= 82 ? "maintaining routine quality and deepening mindfulness" : score >= 72 ? "sleep recovery, movement consistency, and stress reduction" : "structured support, recovery, and practitioner guidance";
+    function closeModal() {
+      authModal.classList.remove("active");
+    }
 
-      quizShell.innerHTML = `
-        <div style="text-align:center">
-          <div style="font-size:3rem;margin-bottom:14px;">🌟</div>
-          <div class="quiz-kicker">Sample Result</div>
-          <h3 style="margin-bottom:10px;">Your Prana Wellness Score</h3>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:5.6rem;line-height:0.9;margin-bottom:10px;">${score}</div>
-          <p style="max-width:560px;margin:0 auto;color:var(--text-soft);line-height:1.9;">This simulated assessment suggests <strong style="color:var(--text)">${label}</strong>. The strongest next focus area appears to be <strong style="color:var(--text)">${focus}</strong>.</p>
-          <div class="tag-row" style="justify-content:center;margin-top:20px;">
-            <span class="tag">Report preview ready</span>
-            <span class="tag">In-person follow-up recommended</span>
-            <span class="tag">Personalized next steps</span>
-          </div>
-          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px;">
-            <a class="btn btn-primary" href="#appointment">Book Full Assessment</a>
-            <button class="btn btn-secondary" type="button" id="retakeQuiz">Retake Assessment</button>
-          </div>
-        </div>
-      `;
-
-      saveAssessmentHistory(score);
-
-        document.getElementById("retakeQuiz").addEventListener("click", () => {
-          currentQuestion = 0;
-          answers = [];
-        quizShell.innerHTML = `
-          <div class="quiz-top">
-            <div class="progress"><span id="quizProgress"></span></div>
-            <div class="progress-label" id="quizCount">1 / 5</div>
-          </div>
-          <div class="domain-pills">
-            <span class="pill">Physical</span>
-            <span class="pill">Mental</span>
-            <span class="pill">Emotional</span>
-            <span class="pill">Lifestyle</span>
-          </div>
-          <div class="quiz-kicker" id="quizCategory"></div>
-          <h3 id="quizQuestion"></h3>
-          <div class="options" id="quizOptions"></div>
-          <div class="quiz-nav">
-            <button class="btn btn-secondary" id="quizPrev">Back</button>
-            <button class="btn btn-primary" id="quizNext">Next</button>
-          </div>
-        `;
-        attachQuizEvents();
-        renderQuiz();
+    function switchTab(tab) {
+      document.querySelectorAll(".modal-tab").forEach((item) => {
+        item.classList.toggle("active", item.dataset.tab === tab);
       });
+      document.getElementById("signinForm").classList.toggle("active", tab === "signin");
+      document.getElementById("signupForm").classList.toggle("active", tab === "signup");
+    }
+
+    async function signIn() {
+      try {
+        const response = await api("/api/auth/signin", {
+          method: "POST",
+          body: JSON.stringify({
+            email: document.getElementById("signinEmail").value.trim(),
+            password: document.getElementById("signinPassword").value
+          })
+        });
+        currentUser = response.user;
+        updateAuthUI();
+        prefillBookingForm();
+        closeModal();
+        await refreshDashboard();
+        window.location.href = "/dashboard";
+      } catch (error) {
+        showToast(error.message || "Unable to sign in.");
+      }
+    }
+
+    async function signUp() {
+      try {
+        const response = await api("/api/auth/signup", {
+          method: "POST",
+          body: JSON.stringify({
+            firstName: document.getElementById("signupFirstName").value.trim(),
+            lastName: document.getElementById("signupLastName").value.trim(),
+            email: document.getElementById("signupEmail").value.trim(),
+            password: document.getElementById("signupPassword").value
+          })
+        });
+        currentUser = {
+          id: response.user.id,
+          firstName: response.user.first_name,
+          lastName: response.user.last_name,
+          email: response.user.email,
+          createdAt: response.user.created_at
+        };
+        updateAuthUI();
+        prefillBookingForm();
+        closeModal();
+        await refreshDashboard();
+        window.location.href = "/dashboard";
+      } catch (error) {
+        showToast(error.message || "Unable to create account.");
+      }
+    }
+
+    function updateAuthUI() {
+      navAuthButton.textContent = currentUser ? "Sign Out" : "Sign In";
+    }
+
+    function prefillBookingForm() {
+      if (!currentUser) {
+        return;
+      }
+      document.getElementById("firstName").value = currentUser.firstName || "";
+      document.getElementById("lastName").value = currentUser.lastName || "";
+      document.getElementById("email").value = currentUser.email || "";
+    }
+
+    async function refreshDashboard() {
+      try {
+        const data = await api("/api/dashboard");
+        applyDashboard(data);
+      } catch (error) {
+        showToast(error.message || "Unable to load dashboard.");
+      }
+    }
+
+    function applyDashboard(data) {
+      const { user, latestMetrics, assessments, bookings } = data;
+      document.getElementById("dashboardAvatar").textContent = `${user.firstName[0] || "P"}`;
+      document.getElementById("dashboardName").textContent = `${user.firstName} ${user.lastName}`;
+      document.getElementById("dashboardMemberSince").textContent = `Member since ${formatDate(user.memberSince, true)}`;
+      document.getElementById("dashboardUpdatedAt").textContent = latestMetrics.updatedAt
+        ? `Last report updated: ${formatDate(latestMetrics.updatedAt)}`
+        : "No report created yet";
+      document.getElementById("dashboardScore").textContent = latestMetrics.overall;
+      document.getElementById("dashboardStatus").textContent = healthLabel(latestMetrics.overall);
+      document.getElementById("metricPhysicalValue").textContent = latestMetrics.physical;
+      document.getElementById("metricMentalValue").textContent = latestMetrics.mental;
+      document.getElementById("metricEmotionalValue").textContent = latestMetrics.emotional;
+      document.getElementById("metricEnergyValue").textContent = latestMetrics.energy;
+      document.getElementById("dashboardSummary").textContent = latestMetrics.summary || "Your dashboard updates here as you complete wellness assessments.";
+
+      setBar("dashBar1", latestMetrics.physical);
+      setBar("dashBar2", latestMetrics.mental);
+      setBar("dashBar3", latestMetrics.emotional);
+      setBar("dashBar4", latestMetrics.energy);
+
+      renderHistory(assessments, bookings);
+    }
+
+    function setSampleDashboard() {
+      document.getElementById("dashboardAvatar").textContent = "A";
+      document.getElementById("dashboardName").textContent = "Arjun Sharma";
+      document.getElementById("dashboardMemberSince").textContent = "Member since January 2025";
+      document.getElementById("dashboardUpdatedAt").textContent = "Last report updated: 24 April 2026";
+      document.getElementById("dashboardScore").textContent = "84";
+      document.getElementById("dashboardStatus").textContent = "Good wellness balance";
+      document.getElementById("metricPhysicalValue").textContent = "78";
+      document.getElementById("metricMentalValue").textContent = "82";
+      document.getElementById("metricEmotionalValue").textContent = "91";
+      document.getElementById("metricEnergyValue").textContent = "76";
+      document.getElementById("dashboardSummary").textContent = "Sign in to load your real dashboard, bookings, and stored assessment history.";
+      setBar("dashBar1", 78);
+      setBar("dashBar2", 82);
+      setBar("dashBar3", 91);
+      setBar("dashBar4", 76);
+    }
+
+    function renderHistory(assessments = [], bookings = []) {
+      if (!assessments.length && !bookings.length) {
+        historyTableBody.innerHTML = `
+          <tr>
+            <td colspan="4">Sign in to see your real appointments and assessments.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      const rows = [
+        ...assessments.map((item) => ({
+          date: item.createdAt,
+          type: "Assessment",
+          score: item.overall,
+          status: item.overall >= 82 ? "Balanced" : item.overall >= 72 ? "Watch" : "Review"
+        })),
+        ...bookings.map((item) => ({
+          date: item.createdAt,
+          type: `${item.service} • ${item.slot}`,
+          score: item.confirmationCode,
+          status: item.status
+        }))
+      ].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      historyTableBody.innerHTML = rows.map((row) => {
+        const statusClass = row.status === "Balanced" || row.status === "Confirmed" ? "good" : row.status === "Watch" ? "watch" : "review";
+        return `
+          <tr>
+            <td>${formatDate(row.date)}</td>
+            <td>${row.type}</td>
+            <td>${row.score}</td>
+            <td><span class="status ${statusClass}">${row.status}</span></td>
+          </tr>
+        `;
+      }).join("");
     }
 
     function attachQuizEvents() {
@@ -2073,119 +2394,153 @@
       });
     }
 
-    const bookingForm = document.getElementById("bookingForm");
-    const slotButtons = Array.from(document.querySelectorAll(".slot-btn"));
-    const selectedSlotInput = document.getElementById("selectedSlot");
-    const liveStatus = document.getElementById("liveStatus");
-    const liveStatusText = document.getElementById("liveStatusText");
-    const bookingConfirmation = document.getElementById("bookingConfirmation");
-    const confirmId = document.getElementById("confirmId");
-    const confirmPractitioner = document.getElementById("confirmPractitioner");
-    const confirmSlot = document.getElementById("confirmSlot");
-    const confirmArrival = document.getElementById("confirmArrival");
-    let selectedSlotMeta = null;
+    function renderQuiz() {
+      const quizCategory = document.getElementById("quizCategory");
+      const quizQuestion = document.getElementById("quizQuestion");
+      const quizOptions = document.getElementById("quizOptions");
+      const quizCount = document.getElementById("quizCount");
+      const quizProgress = document.getElementById("quizProgress");
+      const quizPrev = document.getElementById("quizPrev");
+      const quizNext = document.getElementById("quizNext");
+      const item = questions[currentQuestion];
+      quizCategory.textContent = item.category;
+      quizQuestion.textContent = item.question;
+      quizCount.textContent = `${currentQuestion + 1} / ${questions.length}`;
+      quizProgress.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      quizPrev.style.opacity = currentQuestion === 0 ? "0.45" : "1";
+      quizNext.textContent = currentQuestion === questions.length - 1 ? "View Results" : "Next";
+      quizOptions.innerHTML = "";
 
-    slotButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        slotButtons.forEach((item) => item.classList.remove("active"));
-        button.classList.add("active");
-        selectedSlotMeta = {
-          slot: button.dataset.slot,
-          practitioner: button.dataset.practitioner
-        };
-        selectedSlotInput.value = selectedSlotMeta.slot;
-        bookingConfirmation.classList.remove("show");
-        showToast(`Selected ${selectedSlotMeta.slot} with ${selectedSlotMeta.practitioner}.`);
+      item.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option" + (answers[currentQuestion] === index ? " selected" : "");
+        button.type = "button";
+        button.textContent = option;
+        button.addEventListener("click", () => {
+          answers[currentQuestion] = index;
+          renderQuiz();
+        });
+        quizOptions.appendChild(button);
       });
-    });
-
-    bookingForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const firstName = document.getElementById("firstName").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const service = document.getElementById("service").value;
-      const date = document.getElementById("date").value;
-
-      if (!firstName || !email) {
-        showToast("Please complete at least your name and email.");
-        return;
-      }
-
-      if (!selectedSlotMeta) {
-        showToast("Please choose an available slot first.");
-        return;
-      }
-
-      liveStatus.classList.add("show");
-      liveStatusText.textContent = `Checking practitioner availability for ${selectedSlotMeta.slot}...`;
-
-      await wait(900);
-      liveStatusText.textContent = "Holding your slot and preparing confirmation...";
-      await wait(900);
-      liveStatusText.textContent = "Confirmation in progress. Sending email and SMS simulation...";
-      await wait(900);
-
-      const bookingId = `PV-${Math.floor(1000 + Math.random() * 9000)}`;
-      confirmId.textContent = bookingId;
-      confirmPractitioner.textContent = selectedSlotMeta.practitioner;
-      confirmSlot.textContent = `${date || "Next available date"} • ${selectedSlotMeta.slot}`;
-      confirmArrival.textContent = service === "Organizational Wellness Index" ? "Coordinator call within 2 hours" : "15 minutes early";
-      bookingConfirmation.classList.add("show");
-      liveStatus.classList.remove("show");
-
-      saveBookingHistory(firstName, service, date, selectedSlotMeta.slot, bookingId);
-      showToast(`Booking confirmed for ${firstName}. Reference: ${bookingId}.`);
-      bookingForm.reset();
-      selectedSlotInput.value = "";
-      selectedSlotMeta = null;
-      slotButtons.forEach((item) => item.classList.remove("active"));
-    });
-
-    function saveAssessmentHistory(score) {
-      const rows = JSON.parse(localStorage.getItem("pranaveda-history") || "[]");
-      rows.unshift({
-        date: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
-        type: "Simulated Assessment",
-        score: score,
-        status: score >= 82 ? "Balanced" : score >= 72 ? "Watch" : "Review"
-      });
-      localStorage.setItem("pranaveda-history", JSON.stringify(rows.slice(0, 6)));
-      renderHistory();
     }
 
-    function saveBookingHistory(name, service, date, slot, bookingId) {
-      const rows = JSON.parse(localStorage.getItem("pranaveda-history") || "[]");
-      rows.unshift({
-        date: date || new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
-        type: `${service} • ${slot}`,
-        score: bookingId,
-        status: "Booked"
-      });
-      localStorage.setItem("pranaveda-history", JSON.stringify(rows.slice(0, 6)));
-      renderHistory();
-    }
+    async function showQuizResults() {
+      const quizShell = document.getElementById("quizShell");
+      const average = answers.reduce((sum, item) => sum + item, 0) / answers.length;
+      const overall = Math.max(58, Math.round(88 - average * 8));
+      const physical = Math.max(55, overall - 6);
+      const mental = Math.min(96, overall + 2);
+      const emotional = Math.min(98, overall + 5);
+      const energy = Math.max(50, overall - 8);
+      const summary = overall >= 82
+        ? "Strong resilience with healthy patterns across most wellness dimensions."
+        : overall >= 72
+          ? "Good foundations, with clear improvement opportunities in recovery and stress support."
+          : "This profile would benefit from a more guided in-person wellness review.";
 
-    function wait(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
+      quizShell.innerHTML = `
+        <div style="text-align:center">
+          <div style="font-size:3rem;margin-bottom:14px;">🌟</div>
+          <div class="quiz-kicker">Assessment Result</div>
+          <h3 style="margin-bottom:10px;">Your Prana Wellness Score</h3>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:5.6rem;line-height:0.9;margin-bottom:10px;">${overall}</div>
+          <p style="max-width:560px;margin:0 auto;color:var(--text-soft);line-height:1.9;">${summary}</p>
+          <div class="tag-row" style="justify-content:center;margin-top:20px;">
+            <span class="tag">Physical ${physical}</span>
+            <span class="tag">Mental ${mental}</span>
+            <span class="tag">Emotional ${emotional}</span>
+            <span class="tag">Energy ${energy}</span>
+          </div>
+          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px;">
+            <a class="btn btn-primary" href="#appointment">Book Full Assessment</a>
+            <button class="btn btn-secondary" type="button" id="retakeQuiz">Retake Assessment</button>
+          </div>
+        </div>
+      `;
 
-    function renderHistory() {
-      const tbody = document.querySelector("#historyTable tbody");
-      const rows = JSON.parse(localStorage.getItem("pranaveda-history") || "[]");
-      if (!rows.length) {
-        return;
+      if (currentUser) {
+        try {
+          await api("/api/assessments", {
+            method: "POST",
+            body: JSON.stringify({
+              physical,
+              mental,
+              emotional,
+              energy,
+              overall,
+              summary
+            })
+          });
+          await refreshDashboard();
+          showToast("Assessment saved to your dashboard.");
+        } catch (error) {
+          showToast(error.message || "Unable to save assessment.");
+        }
+      } else {
+        showToast("Sign in to save this assessment to your dashboard.");
       }
-      tbody.innerHTML = rows.map((row) => {
-        const statusClass = row.status === "Balanced" ? "good" : row.status === "Watch" ? "watch" : row.status === "Booked" ? "good" : "review";
-        return `
-          <tr>
-            <td>${row.date}</td>
-            <td>${row.type}</td>
-            <td>${row.score}</td>
-            <td><span class="status ${statusClass}">${row.status}</span></td>
-          </tr>
+
+      document.getElementById("retakeQuiz").addEventListener("click", () => {
+        currentQuestion = 0;
+        answers = [];
+        quizShell.innerHTML = `
+          <div class="quiz-top">
+            <div class="progress"><span id="quizProgress"></span></div>
+            <div class="progress-label" id="quizCount">1 / 5</div>
+          </div>
+          <div class="domain-pills">
+            <span class="pill">Physical</span>
+            <span class="pill">Mental</span>
+            <span class="pill">Emotional</span>
+            <span class="pill">Lifestyle</span>
+          </div>
+          <div class="quiz-kicker" id="quizCategory"></div>
+          <h3 id="quizQuestion"></h3>
+          <div class="options" id="quizOptions"></div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" id="quizPrev">Back</button>
+            <button class="btn btn-primary" id="quizNext">Next</button>
+          </div>
         `;
-      }).join("");
+        attachQuizEvents();
+        renderQuiz();
+      });
+    }
+
+    function setBar(id, value) {
+      document.getElementById(id).style.width = `${value}%`;
+    }
+
+    function formatDate(value, monthYearOnly = false) {
+      if (!value) {
+        return "Not available";
+      }
+      const date = new Date(value);
+      return monthYearOnly
+        ? date.toLocaleDateString("en-US", { month: "long", year: "numeric" })
+        : date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function healthLabel(score) {
+      if (score >= 82) return "Excellent wellness balance";
+      if (score >= 72) return "Good wellness balance";
+      return "Needs guided support";
+    }
+
+    async function api(url, options = {}) {
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          ...(options.headers || {})
+        },
+        credentials: "same-origin",
+        ...options
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed.");
+      }
+      return data;
     }
 
     function showToast(message) {
@@ -2193,28 +2548,36 @@
       toast.textContent = message;
       toast.classList.add("show");
       clearTimeout(window.toastTimer);
-      window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+      window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
     }
 
-    function animateDashboard() {
-      document.getElementById("dashBar1").style.width = "78%";
-      document.getElementById("dashBar2").style.width = "82%";
-      document.getElementById("dashBar3").style.width = "91%";
-      document.getElementById("dashBar4").style.width = "76%";
-    }
+    window.addEventListener("scroll", () => {
+      const mainNav = document.querySelector("nav");
+      if (mainNav) {
+        mainNav.style.boxShadow = window.scrollY > 20 ? "0 4px 20px rgba(44,26,14,0.08)" : "none";
+      }
+    });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.target.id === "dashboard") {
-          animateDashboard();
+    async function boot() {
+      setSampleDashboard();
+      renderHistory([], []);
+      attachQuizEvents();
+      renderQuiz();
+
+      try {
+        const auth = await api("/api/auth/me");
+        if (auth.user) {
+          currentUser = auth.user;
+          updateAuthUI();
+          prefillBookingForm();
+          await refreshDashboard();
         }
-      });
-    }, { threshold: 0.25 });
+      } catch (error) {
+        showToast("Start the local server to use auth, dashboards, and bookings.");
+      }
+    }
 
-    observer.observe(document.getElementById("dashboard"));
-    attachQuizEvents();
-    renderQuiz();
-    renderHistory();
+    boot();
   </script>
 </body>
 </html>

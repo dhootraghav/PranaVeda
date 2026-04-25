@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PranaVeda | User Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth-deep: #2C1A0E;
+    --earth-warm: #5C3D1E;
+    --bark: #8B5A2B;
+    --clay: #C4885A;
+    --sand: #E8C9A0;
+    --cream: #FAF3E8;
+    --gold: #C9A84C;
+    --sage: #7A9E7E;
+    --sage-light: #A8C5A0;
+    --leaf: #4A7C59;
+    --mist: #F0EAE0;
+    --white: #FFFDF8;
+    --text-dark: #1E120A;
+    --text-soft: #8A6F55;
+    --line: rgba(139, 90, 43, 0.16);
+    --shadow: 0 20px 50px rgba(44, 26, 14, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Jost", sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(201,168,76,0.12), transparent 22%),
+      linear-gradient(180deg, #fbf5ec 0%, #f5eee4 100%);
+    color: var(--text-dark);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(1240px, calc(100% - 36px)); margin: 0 auto; }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(250,243,232,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(196,136,90,0.16);
+  }
+  .nav-wrap {
+    min-height: 74px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(circle at 30% 30%, #fef4df, #deb867);
+    border: 1px solid rgba(201,168,76,0.4);
+  }
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    list-style: none;
+    color: var(--text-soft);
+    flex-wrap: wrap;
+  }
+  .nav-links a:hover { color: var(--bark); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.86rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .btn-primary {
+    background: var(--earth-deep);
+    color: var(--sand);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--earth-deep);
+    border-color: rgba(196,136,90,0.35);
+  }
+  .hero {
+    padding: 44px 0 24px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .hero-card,
+  .panel {
+    background: rgba(255,253,248,0.92);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+  }
+  .hero-card {
+    padding: 28px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(201,168,76,0.28);
+    color: var(--bark);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    background: rgba(201,168,76,0.08);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  h1, h2, h3 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+  }
+  .hero-card h1 {
+    margin-top: 18px;
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    line-height: 1.02;
+  }
+  .hero-card p {
+    margin-top: 16px;
+    color: var(--text-soft);
+    line-height: 1.8;
+  }
+  .summary-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .summary-card {
+    padding: 16px;
+    border-radius: 18px;
+    background: var(--white);
+    border: 1px solid rgba(196,136,90,0.14);
+  }
+  .summary-card span {
+    display: block;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-soft);
+    margin-bottom: 8px;
+  }
+  .summary-card strong {
+    font-size: 2rem;
+    font-family: "Cormorant Garamond", serif;
+  }
+  .welcome-card {
+    padding: 28px;
+    background: linear-gradient(140deg, #2d1a0f 0%, #4f3420 100%);
+    color: var(--cream);
+  }
+  .welcome-card p {
+    color: rgba(244,228,199,0.72);
+    line-height: 1.8;
+    margin-top: 14px;
+  }
+  .dashboard-grid {
+    padding: 12px 0 60px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 24px;
+  }
+  .panel {
+    padding: 24px;
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .panel-head p {
+    color: var(--text-soft);
+    font-size: 0.92rem;
+  }
+  .metric-list {
+    display: grid;
+    gap: 14px;
+  }
+  .metric-row {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: var(--white);
+    border: 1px solid rgba(196,136,90,0.12);
+  }
+  .metric-row header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .bar {
+    height: 8px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(196,136,90,0.12);
+  }
+  .bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .bar.physical span { background: linear-gradient(90deg, #c4885a, #e3ba94); }
+  .bar.mental span { background: linear-gradient(90deg, #7A9E7E, #bfd5bd); }
+  .bar.emotional span { background: linear-gradient(90deg, #C9A84C, #efd78e); }
+  .bar.energy span { background: linear-gradient(90deg, #8B5A2B, #ddb28b); }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 14px 0;
+    text-align: left;
+    border-bottom: 1px solid rgba(196,136,90,0.12);
+    white-space: nowrap;
+  }
+  th {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-soft);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .pill.good { background: rgba(122,158,126,0.14); color: var(--leaf); }
+  .pill.watch { background: rgba(201,168,76,0.14); color: #9f6e1c; }
+  .pill.review { background: rgba(196,136,90,0.14); color: var(--bark); }
+  .pill.confirmed { background: rgba(122,158,126,0.14); color: var(--leaf); }
+  .empty {
+    color: var(--text-soft);
+    line-height: 1.8;
+    padding: 4px 0 8px;
+  }
+  .email-link {
+    color: var(--bark);
+    text-decoration: underline;
+  }
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(18px);
+    background: var(--earth-deep);
+    color: var(--sand);
+    padding: 12px 18px;
+    border-radius: 14px;
+    opacity: 0;
+    transition: 0.2s ease;
+    z-index: 40;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  @media (max-width: 1000px) {
+    .hero-grid,
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+    .summary-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 720px) {
+    .nav-wrap {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 14px 0;
+    }
+    .nav-links {
+      justify-content: flex-start;
+    }
+    .summary-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark">✦</span>
+        <span>PranaVeda</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#appointment">Bookings</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+      </ul>
+      <div style="display:flex;gap:12px;justify-self:end;">
+        <button class="btn btn-secondary" id="signOutBtn" type="button">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <span class="eyebrow">Live User Dashboard</span>
+          <h1 id="welcomeName">Welcome back</h1>
+          <p id="welcomeText">Your dashboard loads real assessment scores, confirmations, and history from the platform database.</p>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <span>Overall Score</span>
+              <strong id="overallScore">0</strong>
+            </div>
+            <div class="summary-card">
+              <span>Assessments</span>
+              <strong id="assessmentCount">0</strong>
+            </div>
+            <div class="summary-card">
+              <span>Bookings</span>
+              <strong id="bookingCount">0</strong>
+            </div>
+            <div class="summary-card">
+              <span>Member Since</span>
+              <strong id="memberSince">-</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card welcome-card">
+          <span class="eyebrow" style="background:rgba(255,255,255,0.08);color:var(--cream);border-color:rgba(255,255,255,0.14);">Profile Status</span>
+          <h2 id="statusTitle" style="margin-top:18px;font-size:2.4rem;">Good wellness balance</h2>
+          <p id="statusSummary">Your latest practitioner-aligned result and booking activity appear here in real time.</p>
+          <div style="margin-top:24px;">
+            <a class="btn btn-primary" href="/#appointment">Book Another Session</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 style="font-size:2rem;">Wellness Metrics</h2>
+            <p id="metricsUpdated">Updated from your latest recorded assessment.</p>
+          </div>
+        </div>
+        <div class="metric-list">
+          <div class="metric-row">
+            <header><span>Physical Wellness</span><strong id="physicalValue">0</strong></header>
+            <div class="bar physical"><span id="physicalBar" style="width:0%"></span></div>
+          </div>
+          <div class="metric-row">
+            <header><span>Mental Clarity</span><strong id="mentalValue">0</strong></header>
+            <div class="bar mental"><span id="mentalBar" style="width:0%"></span></div>
+          </div>
+          <div class="metric-row">
+            <header><span>Emotional Stability</span><strong id="emotionalValue">0</strong></header>
+            <div class="bar emotional"><span id="emotionalBar" style="width:0%"></span></div>
+          </div>
+          <div class="metric-row">
+            <header><span>Energy Flow</span><strong id="energyValue">0</strong></header>
+            <div class="bar energy"><span id="energyBar" style="width:0%"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 style="font-size:2rem;">Latest Summary</h2>
+            <p>Your most recent assessment interpretation.</p>
+          </div>
+        </div>
+        <p id="latestSummary" class="empty">No assessment summary available yet.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 style="font-size:2rem;">Assessment History</h2>
+            <p>Every saved assessment linked to your account.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Overall</th>
+                <th>Physical</th>
+                <th>Mental</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="assessmentRows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 style="font-size:2rem;">Bookings & Confirmations</h2>
+            <p>Confirmed sessions tied to your profile.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Service</th>
+                <th>Slot</th>
+                <th>Code</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="bookingRows"></tbody>
+          </table>
+        </div>
+        <div id="bookingEmailInfo" class="empty" style="margin-top:14px;"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const signOutBtn = document.getElementById("signOutBtn");
+
+    signOutBtn.addEventListener("click", async () => {
+      try {
+        await api("/api/auth/signout", { method: "POST" });
+        window.location.href = "/";
+      } catch (error) {
+        showToast(error.message || "Unable to sign out.");
+      }
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+    }
+
+    function formatDate(value, monthYearOnly = false) {
+      if (!value) return "-";
+      const date = new Date(value);
+      return monthYearOnly
+        ? date.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+        : date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+
+    function healthLabel(score) {
+      if (score >= 82) return "Excellent";
+      if (score >= 72) return "Good";
+      return "Needs Review";
+    }
+
+    async function api(url, options = {}) {
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          ...(options.headers || {})
+        },
+        credentials: "same-origin",
+        ...options
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed.");
+      }
+      return data;
+    }
+
+    function renderAssessmentRows(items) {
+      const tbody = document.getElementById("assessmentRows");
+      if (!items.length) {
+        tbody.innerHTML = `<tr><td colspan="5">No saved assessments yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = items.map((item) => `
+        <tr>
+          <td>${formatDate(item.createdAt)}</td>
+          <td>${item.overall}</td>
+          <td>${item.physical}</td>
+          <td>${item.mental}</td>
+          <td><span class="pill ${item.overall >= 82 ? "good" : item.overall >= 72 ? "watch" : "review"}">${healthLabel(item.overall)}</span></td>
+        </tr>
+      `).join("");
+    }
+
+    function renderBookingRows(items) {
+      const tbody = document.getElementById("bookingRows");
+      const emailInfo = document.getElementById("bookingEmailInfo");
+      if (!items.length) {
+        tbody.innerHTML = `<tr><td colspan="5">No confirmed bookings yet.</td></tr>`;
+        emailInfo.textContent = "";
+        return;
+      }
+      tbody.innerHTML = items.map((item) => `
+        <tr>
+          <td>${formatDate(item.date || item.createdAt)}</td>
+          <td>${item.service}</td>
+          <td>${item.slot}</td>
+          <td>${item.confirmationCode}</td>
+          <td><span class="pill confirmed">${item.status}</span></td>
+        </tr>
+      `).join("");
+      emailInfo.innerHTML = `Latest confirmation code: <strong>${items[0].confirmationCode}</strong>. If SMTP is configured, confirmations are sent to the inbox.`;
+    }
+
+    async function boot() {
+      try {
+        const auth = await api("/api/auth/me");
+        if (!auth.user) {
+          window.location.href = "/";
+          return;
+        }
+
+        const dashboard = await api("/api/dashboard");
+        const { user, latestMetrics, assessments, bookings } = dashboard;
+
+        document.getElementById("welcomeName").textContent = `Welcome back, ${user.firstName}`;
+        document.getElementById("welcomeText").textContent = `${user.email} • Your dashboard is now loading live wellness and appointment data from the app database.`;
+        document.getElementById("overallScore").textContent = latestMetrics.overall;
+        document.getElementById("assessmentCount").textContent = assessments.length;
+        document.getElementById("bookingCount").textContent = bookings.length;
+        document.getElementById("memberSince").textContent = formatDate(user.memberSince, true);
+        document.getElementById("statusTitle").textContent = healthLabel(latestMetrics.overall);
+        document.getElementById("statusSummary").textContent = latestMetrics.summary || "No summary available yet.";
+        document.getElementById("metricsUpdated").textContent = latestMetrics.updatedAt
+          ? `Updated ${formatDate(latestMetrics.updatedAt)}`
+          : "No recorded assessments yet.";
+
+        document.getElementById("physicalValue").textContent = latestMetrics.physical;
+        document.getElementById("mentalValue").textContent = latestMetrics.mental;
+        document.getElementById("emotionalValue").textContent = latestMetrics.emotional;
+        document.getElementById("energyValue").textContent = latestMetrics.energy;
+        document.getElementById("physicalBar").style.width = `${latestMetrics.physical}%`;
+        document.getElementById("mentalBar").style.width = `${latestMetrics.mental}%`;
+        document.getElementById("emotionalBar").style.width = `${latestMetrics.emotional}%`;
+        document.getElementById("energyBar").style.width = `${latestMetrics.energy}%`;
+        document.getElementById("latestSummary").textContent = latestMetrics.summary || "No assessment summary available yet.";
+
+        renderAssessmentRows(assessments);
+        renderBookingRows(bookings);
+      } catch (error) {
+        showToast(error.message || "Unable to load dashboard.");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1200);
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
