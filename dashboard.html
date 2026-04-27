@@ -295,6 +295,12 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+  .guest-shell {
+    padding: 48px 0 20px;
+  }
+  #signOutBtn {
+    display: none;
+  }
   @media (max-width: 1000px) {
     .hero-grid,
     .dashboard-grid {
@@ -330,7 +336,7 @@
         <li><a href="/">Home</a></li>
         <li><a href="/#services">Services</a></li>
         <li><a href="/#appointment">Bookings</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
       </ul>
       <div style="display:flex;gap:12px;justify-self:end;">
         <button class="btn btn-secondary" id="signOutBtn" type="button">Sign Out</button>
@@ -339,7 +345,27 @@
   </nav>
 
   <main class="container">
-    <section class="hero">
+    <section class="hero guest-shell" id="guestState" hidden>
+      <div class="hero-grid">
+        <div class="hero-card">
+          <span class="eyebrow">Secure Dashboard</span>
+          <h1 style="margin-top:18px;font-size:clamp(2.4rem,4vw,4rem);">Sign in to view your dashboard</h1>
+          <p>Your assessment history, booking confirmations, and saved profile data are private. Sign in to load your stored records and continue your wellness journey.</p>
+          <div style="margin-top:24px;display:flex;gap:14px;flex-wrap:wrap;">
+            <a class="btn btn-primary" href="/">Go to Home</a>
+            <a class="btn btn-secondary" href="/">Book a Session</a>
+          </div>
+        </div>
+
+        <div class="hero-card welcome-card">
+          <span class="eyebrow" style="background:rgba(255,255,255,0.08);color:var(--cream);border-color:rgba(255,255,255,0.14);">What appears here</span>
+          <h2 style="margin-top:18px;font-size:2.4rem;">Live scores, assessments, and bookings</h2>
+          <p>Once authenticated, this view shows your latest wellness scores, report summary, and appointment history from the app store.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero" id="dashboardHero">
       <div class="hero-grid">
         <div class="hero-card">
           <span class="eyebrow">Live User Dashboard</span>
@@ -377,7 +403,7 @@
       </div>
     </section>
 
-    <section class="dashboard-grid">
+    <section class="dashboard-grid" id="dashboardPanels">
       <div class="panel">
         <div class="panel-head">
           <div>
@@ -468,6 +494,8 @@
 
   <script>
     const signOutBtn = document.getElementById("signOutBtn");
+    const isLocalStaticHost = ["localhost", "127.0.0.1"].includes(window.location.hostname) && window.location.port === "5500";
+    const apiBaseUrl = isLocalStaticHost ? `${window.location.protocol}//${window.location.hostname}:3010/api` : "/api";
 
     signOutBtn.addEventListener("click", async () => {
       try {
@@ -501,12 +529,18 @@
     }
 
     async function api(url, options = {}) {
-      const response = await fetch(url, {
+      // Remove /api prefix if present since apiBaseUrl already includes it
+      let cleanUrl = url;
+      if (url.startsWith("/api/")) {
+        cleanUrl = url.substring(4); // Remove "/api" (4 characters)
+      }
+      const fullUrl = `${apiBaseUrl}${cleanUrl.startsWith("/") ? cleanUrl : `/${cleanUrl}`}`;
+      const response = await fetch(fullUrl, {
         headers: {
           "Content-Type": "application/json",
           ...(options.headers || {})
         },
-        credentials: "same-origin",
+        credentials: isLocalStaticHost ? "include" : "same-origin",
         ...options
       });
       const data = await response.json().catch(() => ({}));
@@ -555,21 +589,35 @@
 
     async function boot() {
       try {
-        const auth = await api("/api/auth/me");
-        if (!auth.user) {
-          window.location.href = "/";
+        // Try to auth, but catch fetch/network errors gracefully
+        let user = null;
+        try {
+          const auth = await api("/api/auth/me");
+          user = auth.user;
+        } catch (authError) {
+          // Auth call failed - user is not authenticated or cannot be reached
+          user = null;
+        }
+
+        if (!user) {
+          document.getElementById("guestState").hidden = false;
+          document.getElementById("dashboardHero").hidden = true;
+          document.getElementById("dashboardPanels").hidden = true;
+          document.getElementById("signOutBtn").style.display = "none";
           return;
         }
 
-        const dashboard = await api("/api/dashboard");
-        const { user, latestMetrics, assessments, bookings } = dashboard;
+        document.getElementById("signOutBtn").style.display = "inline-flex";
 
-        document.getElementById("welcomeName").textContent = `Welcome back, ${user.firstName}`;
-        document.getElementById("welcomeText").textContent = `${user.email} • Your dashboard is now loading live wellness and appointment data from the app database.`;
+        const dashboard = await api("/api/dashboard");
+        const { user: dashboardUser, latestMetrics, assessments, bookings } = dashboard;
+
+        document.getElementById("welcomeName").textContent = `Welcome back, ${dashboardUser.firstName}`;
+        document.getElementById("welcomeText").textContent = `${dashboardUser.email} • Your dashboard is now loading live wellness and appointment data from the app database.`;
         document.getElementById("overallScore").textContent = latestMetrics.overall;
         document.getElementById("assessmentCount").textContent = assessments.length;
         document.getElementById("bookingCount").textContent = bookings.length;
-        document.getElementById("memberSince").textContent = formatDate(user.memberSince, true);
+        document.getElementById("memberSince").textContent = formatDate(dashboardUser.memberSince, true);
         document.getElementById("statusTitle").textContent = healthLabel(latestMetrics.overall);
         document.getElementById("statusSummary").textContent = latestMetrics.summary || "No summary available yet.";
         document.getElementById("metricsUpdated").textContent = latestMetrics.updatedAt

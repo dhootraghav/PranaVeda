@@ -23,8 +23,44 @@ const SESSION_SECRET = process.env.SESSION_SECRET || "pranaveda-dev-secret";
 const PORT = Number(process.env.PORT || 3010);
 
 app.disable("x-powered-by");
+
+const allowedLocalOrigins = new Set([
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "http://localhost:3000",
+  "http://127.0.0.1:3000"
+]);
+
+// CORS middleware must run before body parsers
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  // Allow localhost/127.0.0.1 on any port for local development
+  const isLocalhost = origin && (origin.includes("localhost") || origin.includes("127.0.0.1"));
+  
+  if (isLocalhost) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Max-Age", "86400");
+  }
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  return next();
+});
+
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
+
+// Log all requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  next();
+});
 
 function ensureDir(dirPath) {
   fs.mkdirSync(dirPath, { recursive: true });
@@ -541,6 +577,10 @@ app.get("/email_previews/:file", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
+  res.redirect(302, "/dashboard.html");
+});
+
+app.get("/dashboard.html", (req, res) => {
   res.sendFile(DASHBOARD_PATH);
 });
 
