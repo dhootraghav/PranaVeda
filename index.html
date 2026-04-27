@@ -191,6 +191,30 @@
     background: rgba(255, 255, 255, 0.06);
   }
 
+  /* Download report button styling to match header design */
+  .download-btn {
+    display: inline-block;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 36px;
+    min-width: 220px;
+    margin: 18px auto 0;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid rgba(110,75,40,0.18);
+    background: rgba(255,255,255,0.9);
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(35,18,9,0.04);
+    cursor: pointer;
+  }
+
+  .booking-submit {
+    margin-top: 18px;
+  }
+
   .hero {
     position: relative;
     padding: 60px 0 92px;
@@ -1275,7 +1299,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#assessment">Assessment</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="#recommendations">Recommendations</a></li>
         <li><a href="#profiles">Profiles</a></li>
         <li><a href="#organization">Organization</a></li>
         <li><a href="#knowledge">Knowledge Hub</a></li>
@@ -1633,42 +1658,45 @@
 
     <section id="recommendations">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">Recommendations Engine</span>
-          <h2>Personalized pathways for lifestyle, nutrition, and mindfulness.</h2>
-          <p>The recommendation layer is one of the strongest commercial features of the platform. It helps translate assessment insights into clear action plans that feel personal and practical.</p>
+        <div class="section-head" style="text-align:center;max-width:980px;margin:0 auto 34px;">
+          <span class="eyebrow">YOUR PERSONALIZED PATHWAY</span>
+          <h2>AI-Assisted Recommendations</h2>
+          <p>Based on your recent assessment, our holistic model has identified three focus areas. Integrate these gentle practices to restore systemic harmony and support your unique constitution.</p>
+          <a class="download-btn" href="#appointment">BOOK FULL ASSESSMENT</a>
         </div>
 
-        <div class="reco-grid">
+        <div class="reco-grid" style="margin:28px auto 0;max-width:980px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-items:start;">
           <article class="reco-card">
             <div class="icon">🥗</div>
-            <h3>Nutrition Guidance</h3>
-            <p>Meal timing, digestion support, hydration, and constitution-based food suggestions aligned with the user’s observed wellness profile.</p>
-            <div class="tag-row">
-              <span class="tag">Gut Health</span>
-              <span class="tag">Anti-inflammatory</span>
-              <span class="tag">Ayurveda-informed</span>
+            <h3>Nutrition & Diet</h3>
+            <div class="tag-row" style="margin-top:10px;">
+              <span class="tag">Vata Balance</span>
+              <span class="tag">Warm Foods</span>
+              <span class="tag">Hydration</span>
             </div>
+            <p style="margin-top:12px;color:var(--text-soft);line-height:1.7;">Focus on grounding, cooked meals to balance excess Vata energy. Incorporate root vegetables, healthy fats like ghee, and warming spices such as ginger and cumin into your daily routine. Try to minimize cold or raw foods, especially in the late evening.</p>
           </article>
+
           <article class="reco-card">
-            <div class="icon">🌅</div>
-            <h3>Lifestyle Optimization</h3>
-            <p>Daily rhythm design, movement scheduling, restorative sleep routines, and workday balance practices to improve long-term wellness consistency.</p>
-            <div class="tag-row">
-              <span class="tag">Routine design</span>
-              <span class="tag">Sleep ritual</span>
-              <span class="tag">Movement</span>
+            <div class="icon">🌿</div>
+            <h3>Lifestyle Optimisation</h3>
+            <div class="tag-row" style="margin-top:10px;">
+              <span class="tag">Dinacharya</span>
+              <span class="tag">Sleep Hygiene</span>
+              <span class="tag">Routine</span>
             </div>
+            <p style="margin-top:12px;color:var(--text-soft);line-height:1.7;">Establish a consistent morning routine to anchor your nervous system. We suggest waking up around 6 AM, practicing daily tongue scraping, and dedicating 15 minutes to gentle, mindful stretching before looking at any screens or beginning your workday.</p>
           </article>
+
           <article class="reco-card">
             <div class="icon">🧘</div>
-            <h3>Mindfulness Support</h3>
-            <p>Breathwork, short meditation prompts, grounding practices, and emotional regulation routines based on stress and clarity markers.</p>
-            <div class="tag-row">
+            <h3>Mindfulness</h3>
+            <div class="tag-row" style="margin-top:10px;">
               <span class="tag">Pranayama</span>
+              <span class="tag">Nadi Shodhana</span>
               <span class="tag">Meditation</span>
-              <span class="tag">Resilience</span>
             </div>
+            <p style="margin-top:12px;color:var(--text-soft);line-height:1.7;">Integrate 10 minutes of Nadi Shodhana (alternate nostril breathing) right before bed. This specific breathwork will help clear mental clutter, calm your energetic pathways, and prepare your physical body for deep, uninterrupted and restorative rest.</p>
           </article>
         </div>
       </div>
@@ -1767,7 +1795,7 @@
                   </div>
                 </div>
               </div>
-              <button class="btn btn-primary" type="submit">Confirm Booking</button>
+              <button class="btn btn-primary booking-submit" type="submit">Confirm Booking</button>
             </form>
           </div>
 
@@ -2136,6 +2164,9 @@
     let answers = [];
     let selectedSlotMeta = null;
     let currentUser = null;
+    const isLocalStaticHost = ["localhost", "127.0.0.1"].includes(window.location.hostname) && window.location.port === "5500";
+    const apiBaseUrl = isLocalStaticHost ? `${window.location.protocol}//${window.location.hostname}:3010/api` : "/api";
+    const dashboardUrl = isLocalStaticHost ? "dashboard.html" : "/dashboard";
 
     navToggle.addEventListener("click", () => navLinks.classList.toggle("open"));
     navAuthButton.addEventListener("click", async (event) => {
@@ -2284,7 +2315,7 @@
         prefillBookingForm();
         closeModal();
         await refreshDashboard();
-        window.location.href = "/dashboard";
+        window.location.href = dashboardUrl;
       } catch (error) {
         setAuthError("signin", error.message || "Unable to sign in.");
       }
@@ -2322,7 +2353,7 @@
         prefillBookingForm();
         closeModal();
         await refreshDashboard();
-        window.location.href = "/dashboard";
+        window.location.href = dashboardUrl;
       } catch (error) {
         setAuthError("signup", error.message || "Unable to create account.");
       }
@@ -2599,12 +2630,18 @@
     }
 
     async function api(url, options = {}) {
-      const response = await fetch(url, {
+      // Remove /api prefix if present since apiBaseUrl already includes it
+      let cleanUrl = url;
+      if (url.startsWith("/api/")) {
+        cleanUrl = url.substring(4); // Remove "/api" (4 characters)
+      }
+      const fullUrl = `${apiBaseUrl}${cleanUrl.startsWith("/") ? cleanUrl : `/${cleanUrl}`}`;
+      const response = await fetch(fullUrl, {
         headers: {
           "Content-Type": "application/json",
           ...(options.headers || {})
         },
-        credentials: "same-origin",
+        credentials: isLocalStaticHost ? "include" : "same-origin",
         ...options
       });
       const data = await response.json().catch(() => ({}));
