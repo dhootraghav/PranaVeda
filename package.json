@@ -1,7 +1,7 @@
 {
-  "name": "pranaveda-platform",
+  "name": "bhuayu-platform",
   "version": "1.0.0",
-  "description": "PranaVeda wellness assessment platform with auth, bookings, dashboards, and email confirmations.",
+  "description": "BhuAyu wellness assessment platform with auth, bookings, dashboards, and email confirmations.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

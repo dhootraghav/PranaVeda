@@ -12,7 +12,7 @@ const app = express();
 
 const ROOT = __dirname;
 const IS_VERCEL = Boolean(process.env.VERCEL);
-const RUNTIME_BASE = IS_VERCEL ? path.join("/tmp", "pranaveda-runtime") : ROOT;
+const RUNTIME_BASE = IS_VERCEL ? path.join("/tmp", "bhuayu-runtime") : ROOT;
 const DATA_DIR = path.join(RUNTIME_BASE, "data");
 const EMAIL_DIR = path.join(RUNTIME_BASE, "email_previews");
 const STORE_PATH = path.join(DATA_DIR, "store.json");
@@ -28,8 +28,8 @@ const SUBPAGE_PATHS = {
   "/about": path.join(ROOT, "about.html"),
   "/contact": path.join(ROOT, "contact.html")
 };
-const COOKIE_NAME = "pranaveda_session";
-const SESSION_SECRET = process.env.SESSION_SECRET || "pranaveda-dev-secret";
+const COOKIE_NAME = "bhuayu_session";
+const SESSION_SECRET = process.env.SESSION_SECRET || "bhuayu-dev-secret";
 const PORT = Number(process.env.PORT || 3010);
 
 app.disable("x-powered-by");
@@ -286,8 +286,8 @@ function randomCode(prefix) {
 
 function pickSubject(service) {
   return service === "Organizational Wellness Index"
-    ? "PranaVeda Organizational Consultation Confirmed"
-    : "PranaVeda Booking Confirmed";
+    ? "BhuAyu Organizational Consultation Confirmed"
+    : "BhuAyu Booking Confirmed";
 }
 
 function createTransport() {
@@ -321,7 +321,7 @@ async function sendConfirmationEmail({ booking, firstName, email }) {
   const subject = `${pickSubject(booking.service)} • ${booking.confirmationCode}`;
   const html = `
     <div style="font-family:Arial,sans-serif;line-height:1.6;color:#2b180d">
-      <h2 style="margin-bottom:8px;">PranaVeda Session Confirmed</h2>
+      <h2 style="margin-bottom:8px;">BhuAyu Session Confirmed</h2>
       <p>Hello ${firstName},</p>
       <p>Your booking has been confirmed for <strong>${booking.service}</strong>.</p>
       <p>
@@ -337,7 +337,7 @@ async function sendConfirmationEmail({ booking, firstName, email }) {
   const transport = createTransport();
   if (transport) {
     await transport.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER || "hello@pranaveda.local",
+      from: process.env.SMTP_FROM || process.env.SMTP_USER || "hello@bhuayu.local",
       to: email,
       subject,
       html
@@ -368,7 +368,7 @@ function addWelcomeAssessment(store, userId) {
     emotional: 84,
     energy: 74,
     overall: 79,
-    summary: "Welcome assessment baseline created for your new PranaVeda profile.",
+    summary: "Welcome assessment baseline created for your new BhuAyu profile.",
     createdAt: nowIso()
   };
   store.assessments.push(assessment);
@@ -542,7 +542,7 @@ app.post("/api/bookings", async (req, res) => {
     practitioner,
     notes,
     status: "Confirmed",
-    confirmationCode: randomCode("PV"),
+    confirmationCode: randomCode("BA"),
     createdAt: nowIso()
   };
 
@@ -624,7 +624,7 @@ const ready = Promise.resolve().then(() => {
 if (require.main === module) {
   ready.then(() => {
     app.listen(PORT, () => {
-      console.log(`PranaVeda server running on http://localhost:${PORT}`);
+      console.log(`BhuAyu server running on http://localhost:${PORT}`);
     });
   }).catch((error) => {
     console.error("Failed to start server", error);
