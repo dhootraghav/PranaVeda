@@ -50,6 +50,7 @@
   button, input, select, textarea { font: inherit; }
 
   .container { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+  nav .container { width: min(1440px, calc(100% - 32px)); }
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -125,9 +126,9 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: 14px;
     color: var(--text-soft);
-    font-size: 0.84rem;
+    font-size: 0.8rem;
     line-height: 1;
   }
   .nav-links li {
@@ -183,11 +184,19 @@
   .nav-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 18px;
     justify-self: end;
   }
   .nav-actions .btn {
     flex-shrink: 0;
+  }
+  .nav-link-plain {
+    color: var(--text);
+    font-size: 0.84rem;
+    white-space: nowrap;
+  }
+  .nav-link-plain:hover {
+    color: var(--forest);
   }
   .nav-toggle {
     display: none;
@@ -1581,7 +1590,7 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="#home">Home</a></li>
-        <li><a href="#about">About BhuAyu</a></li>
+        <li><a href="#about">About</a></li>
         <li class="has-dropdown">
           <a href="#solutions">Solutions</a>
           <ul class="dropdown">
@@ -1595,11 +1604,11 @@
         <li><a href="#how-it-works">How It Works</a></li>
         <li><a href="#insights">Insights</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
       </ul>
 
       <div class="nav-actions">
-        <a class="btn btn-secondary" href="#" id="navAuthButton">Sign In</a>
+        <a class="nav-link-plain" href="dashboard.html">Dashboard</a>
+        <a class="nav-link-plain" href="#" id="navAuthButton">Sign In</a>
         <a class="btn btn-secondary" href="#organization">For Organizations</a>
         <a class="btn btn-primary" href="#appointment">Book an Assessment</a>
       </div>
