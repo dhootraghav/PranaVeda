@@ -3,34 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PranaVeda | User Dashboard</title>
+<title>BhuAyu | User Dashboard</title>
+<link rel="icon" type="image/png" href="bhuayu-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --earth-deep: #2C1A0E;
-    --earth-warm: #5C3D1E;
-    --bark: #8B5A2B;
-    --clay: #C4885A;
-    --sand: #E8C9A0;
-    --cream: #FAF3E8;
-    --gold: #C9A84C;
-    --sage: #7A9E7E;
-    --sage-light: #A8C5A0;
-    --leaf: #4A7C59;
-    --mist: #F0EAE0;
-    --white: #FFFDF8;
-    --text-dark: #1E120A;
-    --text-soft: #8A6F55;
-    --line: rgba(139, 90, 43, 0.16);
-    --shadow: 0 20px 50px rgba(44, 26, 14, 0.08);
+    --earth-deep: #12251a;
+    --earth-warm: #1f5c3a;
+    --bark: #9c7a2e;
+    --clay: #b87945;
+    --sand: #f3e6c0;
+    --cream: #fdf6e6;
+    --gold: #c9982f;
+    --sage: #4a9b6e;
+    --sage-light: #9cc9ab;
+    --leaf: #1b6b3f;
+    --mist: #f0eae0;
+    --white: #fffdf8;
+    --text-dark: #201a12;
+    --text-soft: #6b5f4e;
+    --line: rgba(27, 107, 63, 0.16);
+    --shadow: 0 20px 50px rgba(14, 33, 23, 0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: "Jost", sans-serif;
     background:
-      radial-gradient(circle at top left, rgba(201,168,76,0.12), transparent 22%),
+      radial-gradient(circle at top left, rgba(201,152,47,0.12), transparent 22%),
       linear-gradient(180deg, #fbf5ec 0%, #f5eee4 100%);
     color: var(--text-dark);
   }
@@ -42,7 +43,7 @@
     z-index: 10;
     background: rgba(250,243,232,0.92);
     backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(196,136,90,0.16);
+    border-bottom: 1px solid rgba(27,107,63,0.16);
   }
   .nav-wrap {
     min-height: 74px;
@@ -62,11 +63,8 @@
   .brand-mark {
     width: 42px;
     height: 42px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: radial-gradient(circle at 30% 30%, #fef4df, #deb867);
-    border: 1px solid rgba(201,168,76,0.4);
+    object-fit: contain;
+    display: block;
   }
   .nav-links {
     display: flex;
@@ -98,7 +96,7 @@
   .btn-secondary {
     background: transparent;
     color: var(--earth-deep);
-    border-color: rgba(196,136,90,0.35);
+    border-color: rgba(27,107,63,0.35);
   }
   .hero {
     padding: 44px 0 24px;
@@ -125,12 +123,12 @@
     gap: 10px;
     padding: 7px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(201,168,76,0.28);
+    border: 1px solid rgba(201,152,47,0.28);
     color: var(--bark);
     font-size: 0.76rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    background: rgba(201,168,76,0.08);
+    background: rgba(201,152,47,0.08);
   }
   .eyebrow::before {
     content: "";
@@ -163,7 +161,7 @@
     padding: 16px;
     border-radius: 18px;
     background: var(--white);
-    border: 1px solid rgba(196,136,90,0.14);
+    border: 1px solid rgba(27,107,63,0.14);
   }
   .summary-card span {
     display: block;
@@ -179,7 +177,7 @@
   }
   .welcome-card {
     padding: 28px;
-    background: linear-gradient(140deg, #2d1a0f 0%, #4f3420 100%);
+    background: linear-gradient(140deg, #123420 0%, #1f5c3a 100%);
     color: var(--cream);
   }
   .welcome-card p {
@@ -215,7 +213,7 @@
     padding: 14px 16px;
     border-radius: 18px;
     background: var(--white);
-    border: 1px solid rgba(196,136,90,0.12);
+    border: 1px solid rgba(27,107,63,0.12);
   }
   .metric-row header {
     display: flex;
@@ -226,17 +224,17 @@
     height: 8px;
     border-radius: 999px;
     overflow: hidden;
-    background: rgba(196,136,90,0.12);
+    background: rgba(27,107,63,0.12);
   }
   .bar span {
     display: block;
     height: 100%;
     border-radius: inherit;
   }
-  .bar.physical span { background: linear-gradient(90deg, #c4885a, #e3ba94); }
-  .bar.mental span { background: linear-gradient(90deg, #7A9E7E, #bfd5bd); }
-  .bar.emotional span { background: linear-gradient(90deg, #C9A84C, #efd78e); }
-  .bar.energy span { background: linear-gradient(90deg, #8B5A2B, #ddb28b); }
+  .bar.physical span { background: linear-gradient(90deg, #c9982f, #e8c158); }
+  .bar.mental span { background: linear-gradient(90deg, #1b6b3f, #4a9b6e); }
+  .bar.emotional span { background: linear-gradient(90deg, #9c7a2e, #d8b45f); }
+  .bar.energy span { background: linear-gradient(90deg, #0e2117, #1b6b3f); }
   .table-wrap {
     overflow-x: auto;
   }
@@ -247,7 +245,7 @@
   th, td {
     padding: 14px 0;
     text-align: left;
-    border-bottom: 1px solid rgba(196,136,90,0.12);
+    border-bottom: 1px solid rgba(27,107,63,0.12);
     white-space: nowrap;
   }
   th {
@@ -266,8 +264,8 @@
     letter-spacing: 0.08em;
   }
   .pill.good { background: rgba(122,158,126,0.14); color: var(--leaf); }
-  .pill.watch { background: rgba(201,168,76,0.14); color: #9f6e1c; }
-  .pill.review { background: rgba(196,136,90,0.14); color: var(--bark); }
+  .pill.watch { background: rgba(201,152,47,0.14); color: #9f6e1c; }
+  .pill.review { background: rgba(184,121,69,0.14); color: var(--clay); }
   .pill.confirmed { background: rgba(122,158,126,0.14); color: var(--leaf); }
   .empty {
     color: var(--text-soft);
@@ -329,12 +327,12 @@
   <nav>
     <div class="container nav-wrap">
       <a class="brand" href="/">
-        <span class="brand-mark">✦</span>
-        <span>PranaVeda</span>
+        <img class="brand-mark" src="bhuayu-icon.png" alt="BhuAyu">
+        <span>BhuAyu</span>
       </a>
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
-        <li><a href="/#services">Services</a></li>
+        <li><a href="/#solutions">Solutions</a></li>
         <li><a href="/#appointment">Bookings</a></li>
         <li><a href="dashboard.html">Dashboard</a></li>
       </ul>
