@@ -897,10 +897,6 @@ footer {
     box-shadow: none;
     border: 0;
     padding: 4px 0 4px 14px;
-    display: none;
-  }
-  .has-dropdown:hover .dropdown,
-  .has-dropdown:focus-within .dropdown {
     display: grid;
   }
   .vision-row,
