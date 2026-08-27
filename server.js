@@ -18,6 +18,16 @@ const EMAIL_DIR = path.join(RUNTIME_BASE, "email_previews");
 const STORE_PATH = path.join(DATA_DIR, "store.json");
 const INDEX_PATH = path.join(ROOT, "index.html");
 const DASHBOARD_PATH = path.join(ROOT, "dashboard.html");
+const STYLES_PATH = path.join(ROOT, "styles.css");
+const SUBPAGE_PATHS = {
+  "/individual-wellness": path.join(ROOT, "individual-wellness.html"),
+  "/corporate-wellness": path.join(ROOT, "corporate-wellness.html"),
+  "/organizational-wellness-index": path.join(ROOT, "organizational-wellness-index.html"),
+  "/how-it-works": path.join(ROOT, "how-it-works.html"),
+  "/wellness-intelligence": path.join(ROOT, "wellness-intelligence.html"),
+  "/about": path.join(ROOT, "about.html"),
+  "/contact": path.join(ROOT, "contact.html")
+};
 const COOKIE_NAME = "pranaveda_session";
 const SESSION_SECRET = process.env.SESSION_SECRET || "pranaveda-dev-secret";
 const PORT = Number(process.env.PORT || 3010);
@@ -582,6 +592,14 @@ app.get("/dashboard", (req, res) => {
 
 app.get("/dashboard.html", (req, res) => {
   res.sendFile(DASHBOARD_PATH);
+});
+
+app.get("/styles.css", (req, res) => {
+  res.sendFile(STYLES_PATH);
+});
+
+app.get(Object.keys(SUBPAGE_PATHS), (req, res) => {
+  res.sendFile(SUBPAGE_PATHS[req.path]);
 });
 
 app.get("/", (req, res) => {
