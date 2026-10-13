@@ -1598,6 +1598,7 @@
         </li>
         <li><a href="/wellness-intelligence">Wellness Intelligence</a></li>
         <li><a href="/how-it-works">How It Works</a></li>
+          <li><a href="/assessment">Assessment</a></li>
         <li><a href="#insights">Insights</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
@@ -1646,40 +1647,14 @@
         </div>
 
         <div class="hero-aside">
-          <div class="spotlight-card">
-            <div class="spotlight-top">
-              <div>
-                <div class="spotlight-title">Live Wellness Snapshot</div>
-                <p style="margin-top:8px;color:rgba(247,232,204,0.72);line-height:1.7;">A sample score built from physical vitality, mental clarity, emotional resilience, and energetic balance.</p>
-              </div>
+          <div class="spotlight-card" id="heroCheckin">
+            <div class="spotlight-title">Free wellness check-in</div>
+            <div id="heroCheckinBody">
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;line-height:1.1;font-weight:600;margin:24px 0 14px;">See where you stand in about three minutes.</h2>
+              <p style="color:rgba(247,232,204,0.78);line-height:1.75;">Twelve short statements about physical, mental, emotional and energy balance. You get your scores straight away, and nothing is sent or stored.</p>
+              <a class="btn btn-primary" href="/assessment" style="margin-top:22px;">Take the check-in</a>
             </div>
-
-            <div class="score-ring">
-              <div style="text-align:center">
-                <strong id="heroScore">84</strong>
-                <div style="font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,232,204,0.66);">BhuAyu Index</div>
-              </div>
-            </div>
-
-            <div class="spotlight-grid">
-              <div class="spotlight-metric">
-                <label>Physical</label>
-                <strong>78</strong>
-              </div>
-              <div class="spotlight-metric">
-                <label>Mental</label>
-                <strong>82</strong>
-              </div>
-              <div class="spotlight-metric">
-                <label>Emotional</label>
-                <strong>91</strong>
-              </div>
-            </div>
-
-            <div style="margin-top:18px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.05);border-radius:18px;">
-              <div style="font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(247,232,204,0.62);margin-bottom:8px;">In-person service promise</div>
-              <div style="color:rgba(247,232,204,0.86);line-height:1.72;">Every assessment is conducted physically at our wellness center or partner location and followed by a practitioner-reviewed report.</div>
-            </div>
+            <p style="margin-top:22px;font-size:0.82rem;line-height:1.6;color:rgba(247,232,204,0.6);">A self-reported lifestyle check-in, not a medical assessment or diagnosis.</p>
           </div>
 
           <div class="vision-row">
@@ -1909,56 +1884,11 @@
     <section class="surface" id="assessment">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">Simulated Assessment Module</span>
-          <h2>Experience the assessment flow before booking a full in-person session.</h2>
-          <p>This simulation demonstrates how the real platform can screen key wellness areas, generate a sample score, and direct the user toward appropriate follow-up support.</p>
+          <span class="eyebrow">Wellness check-in</span>
+          <h2>Check in with yourself in three minutes.</h2>
+          <p>Twelve short statements cover physical, mental, emotional and energy balance. You see your scores straight away, with a few ideas for where to start.</p>
         </div>
-
-        <div class="assessment-wrap">
-          <div class="quiz-shell" id="quizShell">
-            <div class="quiz-top">
-              <div class="progress"><span id="quizProgress"></span></div>
-              <div class="progress-label" id="quizCount">1 / 5</div>
-            </div>
-
-            <div class="domain-pills">
-              <span class="pill">Physical</span>
-              <span class="pill">Mental</span>
-              <span class="pill">Emotional</span>
-              <span class="pill">Lifestyle</span>
-            </div>
-
-            <div class="quiz-kicker" id="quizCategory">Physical Wellness</div>
-            <h3 id="quizQuestion">How would you rate your average sleep quality over the past month?</h3>
-            <div class="options" id="quizOptions"></div>
-
-            <div class="quiz-nav">
-              <button class="btn btn-secondary" id="quizPrev">Back</button>
-              <button class="btn btn-primary" id="quizNext">Next</button>
-            </div>
-          </div>
-
-          <div class="assessment-notes">
-            <div class="book-card">
-              <h3>Assessment coverage</h3>
-              <p>The real service is designed to convert screening data into a guided practitioner experience. Each dimension contributes to the final wellness picture.</p>
-              <div class="tag-row">
-                <span class="tag">Physical vitality</span>
-                <span class="tag">Mental resilience</span>
-                <span class="tag">Emotional balance</span>
-                <span class="tag">Energy patterning</span>
-              </div>
-            </div>
-            <div class="book-card">
-              <h3>Business usability</h3>
-              <p>This module can be used as a lead-generation tool on a live website. It gives visitors a useful preview while encouraging qualified appointment conversion.</p>
-            </div>
-            <div class="book-card">
-              <h3>Output promise</h3>
-              <p>Each full assessment can produce a shareable wellness report, score breakdown, practitioner summary, and personalized lifestyle recommendations.</p>
-            </div>
-          </div>
-        </div>
+        <a class="btn btn-primary" href="/assessment">Start the check-in</a>
       </div>
     </section>
 
@@ -2629,7 +2559,7 @@
           <ul>
             <li><a href="/about">About BhuAyu</a></li>
             <li><a href="/how-it-works">How It Works</a></li>
-            <li><a href="#assessment">Assessment Module</a></li>
+            <li><a href="/assessment">Wellness Check-in</a></li>
             <li><a href="#dashboard">Dashboard</a></li>
             <li><a href="#insights">Insights</a></li>
           </ul>
@@ -2711,58 +2641,6 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const questions = [
-      {
-        category: "Physical Wellness",
-        question: "How would you rate your average sleep quality over the past month?",
-        options: [
-          "Excellent — deep, restful, and consistent",
-          "Good — mostly restful with minor interruptions",
-          "Fair — often disturbed or shorter than ideal",
-          "Poor — low-quality or consistently disrupted"
-        ]
-      },
-      {
-        category: "Mental Wellness",
-        question: "How often do you feel mentally overwhelmed or unable to focus clearly?",
-        options: [
-          "Rarely — I usually feel clear and composed",
-          "Sometimes — stress is manageable",
-          "Often — mental fog appears regularly",
-          "Very often — focus and clarity feel difficult"
-        ]
-      },
-      {
-        category: "Emotional Wellness",
-        question: "How connected do you feel to purpose, calm, and emotional stability in daily life?",
-        options: [
-          "Very connected — I feel steady and grounded",
-          "Mostly connected — occasional fluctuations",
-          "Somewhat disconnected — I often feel unsettled",
-          "Disconnected — I feel emotionally strained"
-        ]
-      },
-      {
-        category: "Energetic Wellness",
-        question: "How would you describe your overall energy levels throughout the day?",
-        options: [
-          "Vibrant — strong energy from morning to evening",
-          "Good — mild dips but mostly steady",
-          "Moderate — fatigue is common by midday",
-          "Low — tiredness is present most of the day"
-        ]
-      },
-      {
-        category: "Lifestyle Habits",
-        question: "How consistent are your movement, exercise, and recovery habits?",
-        options: [
-          "Very consistent — exercise and recovery are part of my routine",
-          "Mostly consistent — active most weeks",
-          "Irregular — habits vary a lot",
-          "Sedentary — little structured movement"
-        ]
-      }
-    ];
 
     const navToggle = document.getElementById("navToggle");
     const navLinks = document.getElementById("navLinks");
@@ -3097,141 +2975,6 @@
       }).join("");
     }
 
-    function attachQuizEvents() {
-      document.getElementById("quizPrev").addEventListener("click", () => {
-        if (currentQuestion > 0) {
-          currentQuestion -= 1;
-          renderQuiz();
-        }
-      });
-
-      document.getElementById("quizNext").addEventListener("click", () => {
-        if (answers[currentQuestion] === undefined) {
-          showToast("Please select an answer before continuing.");
-          return;
-        }
-        if (currentQuestion < questions.length - 1) {
-          currentQuestion += 1;
-          renderQuiz();
-        } else {
-          showQuizResults();
-        }
-      });
-    }
-
-    function renderQuiz() {
-      const quizCategory = document.getElementById("quizCategory");
-      const quizQuestion = document.getElementById("quizQuestion");
-      const quizOptions = document.getElementById("quizOptions");
-      const quizCount = document.getElementById("quizCount");
-      const quizProgress = document.getElementById("quizProgress");
-      const quizPrev = document.getElementById("quizPrev");
-      const quizNext = document.getElementById("quizNext");
-      const item = questions[currentQuestion];
-      quizCategory.textContent = item.category;
-      quizQuestion.textContent = item.question;
-      quizCount.textContent = `${currentQuestion + 1} / ${questions.length}`;
-      quizProgress.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-      quizPrev.style.opacity = currentQuestion === 0 ? "0.45" : "1";
-      quizNext.textContent = currentQuestion === questions.length - 1 ? "View Results" : "Next";
-      quizOptions.innerHTML = "";
-
-      item.options.forEach((option, index) => {
-        const button = document.createElement("button");
-        button.className = "option" + (answers[currentQuestion] === index ? " selected" : "");
-        button.type = "button";
-        button.textContent = option;
-        button.addEventListener("click", () => {
-          answers[currentQuestion] = index;
-          renderQuiz();
-        });
-        quizOptions.appendChild(button);
-      });
-    }
-
-    async function showQuizResults() {
-      const quizShell = document.getElementById("quizShell");
-      const average = answers.reduce((sum, item) => sum + item, 0) / answers.length;
-      const overall = Math.max(58, Math.round(88 - average * 8));
-      const physical = Math.max(55, overall - 6);
-      const mental = Math.min(96, overall + 2);
-      const emotional = Math.min(98, overall + 5);
-      const energy = Math.max(50, overall - 8);
-      const summary = overall >= 82
-        ? "Strong resilience with healthy patterns across most wellness dimensions."
-        : overall >= 72
-          ? "Good foundations, with clear improvement opportunities in recovery and stress support."
-          : "This profile would benefit from a more guided in-person wellness review.";
-
-      quizShell.innerHTML = `
-        <div style="text-align:center">
-          <div style="font-size:3rem;margin-bottom:14px;">🌟</div>
-          <div class="quiz-kicker">Assessment Result</div>
-          <h3 style="margin-bottom:10px;">Your Prana Wellness Score</h3>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:5.6rem;line-height:0.9;margin-bottom:10px;">${overall}</div>
-          <p style="max-width:560px;margin:0 auto;color:var(--text-soft);line-height:1.9;">${summary}</p>
-          <div class="tag-row" style="justify-content:center;margin-top:20px;">
-            <span class="tag">Physical ${physical}</span>
-            <span class="tag">Mental ${mental}</span>
-            <span class="tag">Emotional ${emotional}</span>
-            <span class="tag">Energy ${energy}</span>
-          </div>
-          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px;">
-            <a class="btn btn-primary" href="#appointment">Book Full Assessment</a>
-            <button class="btn btn-secondary" type="button" id="retakeQuiz">Retake Assessment</button>
-          </div>
-        </div>
-      `;
-
-      if (currentUser) {
-        try {
-          await api("/api/assessments", {
-            method: "POST",
-            body: JSON.stringify({
-              physical,
-              mental,
-              emotional,
-              energy,
-              overall,
-              summary
-            })
-          });
-          await refreshDashboard();
-          showToast("Assessment saved to your dashboard.");
-        } catch (error) {
-          showToast(error.message || "Unable to save assessment.");
-        }
-      } else {
-        showToast("Sign in to save this assessment to your dashboard.");
-      }
-
-      document.getElementById("retakeQuiz").addEventListener("click", () => {
-        currentQuestion = 0;
-        answers = [];
-        quizShell.innerHTML = `
-          <div class="quiz-top">
-            <div class="progress"><span id="quizProgress"></span></div>
-            <div class="progress-label" id="quizCount">1 / 5</div>
-          </div>
-          <div class="domain-pills">
-            <span class="pill">Physical</span>
-            <span class="pill">Mental</span>
-            <span class="pill">Emotional</span>
-            <span class="pill">Lifestyle</span>
-          </div>
-          <div class="quiz-kicker" id="quizCategory"></div>
-          <h3 id="quizQuestion"></h3>
-          <div class="options" id="quizOptions"></div>
-          <div class="quiz-nav">
-            <button class="btn btn-secondary" id="quizPrev">Back</button>
-            <button class="btn btn-primary" id="quizNext">Next</button>
-          </div>
-        `;
-        attachQuizEvents();
-        renderQuiz();
-      });
-    }
-
     function setBar(id, value) {
       document.getElementById(id).style.width = `${value}%`;
     }
@@ -3289,11 +3032,28 @@
       }
     });
 
+    function renderHeroCheckin() {
+      let r = null;
+      try { r = JSON.parse(localStorage.getItem("bhuayu_checkin")); } catch (e) {}
+      if (!r || typeof r.overall !== "number") return;
+      const n = v => Math.max(0, Math.min(100, Number(v) || 0));
+      const deg = Math.round(n(r.overall) * 3.6);
+      const metric = (l, v) => `<div class="spotlight-metric"><label>${l}</label><strong>${n(v)}</strong></div>`;
+      document.getElementById("heroCheckinBody").innerHTML = `
+        <div class="score-ring" style="background:radial-gradient(circle at center,#14301f 0 50%,transparent 51%),conic-gradient(var(--gold) 0 ${deg}deg,rgba(255,255,255,0.12) ${deg}deg 360deg);">
+          <div style="text-align:center;"><strong>${n(r.overall)}</strong>
+            <div style="font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(247,232,204,0.66);">Your last check-in</div></div>
+        </div>
+        <div class="spotlight-grid" style="grid-template-columns:repeat(2,minmax(0,1fr));">
+          ${metric("Physical", r.physical)}${metric("Mental", r.mental)}${metric("Emotional", r.emotional)}${metric("Energy", r.energy)}
+        </div>
+        <a class="btn btn-primary" href="/assessment" style="margin-top:22px;">Retake the check-in</a>`;
+    }
+
     async function boot() {
+      renderHeroCheckin();
       setSampleDashboard();
       renderHistory([], []);
-      attachQuizEvents();
-      renderQuiz();
 
       try {
         const auth = await api("/api/auth/me");
