@@ -26,6 +26,7 @@ const SUBPAGE_PATHS = {
   "/how-it-works": path.join(ROOT, "how-it-works.html"),
   "/wellness-intelligence": path.join(ROOT, "wellness-intelligence.html"),
   "/about": path.join(ROOT, "about.html"),
+  "/assessment": path.join(ROOT, "assessment.html"),
   "/contact": path.join(ROOT, "contact.html")
 };
 const COOKIE_NAME = "bhuayu_session";
@@ -236,12 +237,12 @@ function requireUser(req, res) {
 function buildLatestMetrics(assessments) {
   if (!assessments.length) {
     return {
-      overall: 84,
-      physical: 78,
-      mental: 82,
-      emotional: 91,
-      energy: 76,
-      summary: "Your dashboard will update here as you complete assessments and attend sessions.",
+      overall: 0,
+      physical: 0,
+      mental: 0,
+      emotional: 0,
+      energy: 0,
+      summary: "No assessment results yet.",
       updatedAt: null
     };
   }
@@ -359,21 +360,6 @@ async function sendConfirmationEmail({ booking, firstName, email }) {
   };
 }
 
-function addWelcomeAssessment(store, userId) {
-  const assessment = {
-    id: nextId(store, "assessments"),
-    userId,
-    physical: 76,
-    mental: 80,
-    emotional: 84,
-    energy: 74,
-    overall: 79,
-    summary: "Welcome assessment baseline created for your new BhuAyu profile.",
-    createdAt: nowIso()
-  };
-  store.assessments.push(assessment);
-}
-
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, runtime: IS_VERCEL ? "vercel" : "local" });
 });
@@ -415,7 +401,6 @@ app.post("/api/auth/signup", async (req, res) => {
   };
 
   store.users.push(user);
-  addWelcomeAssessment(store, user.id);
   saveStore(store);
   setAuthCookie(res, user.id);
 
