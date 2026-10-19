@@ -14,7 +14,7 @@
   .section-head h1 { margin-top: 18px; font-family: "Cormorant Garamond", serif; font-size: clamp(2.6rem, 5vw, 4.4rem); line-height: 1.04; font-weight: 600; letter-spacing: -0.02em; }
   .ci { max-width: 760px; margin-top: 34px; padding: 34px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
   .ci-top { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
-  .ci-bar { flex: 1; height: 6px; border-radius: 99px; background: rgba(27, 107, 63, 0.12); overflow: hidden; }
+  .ci-bar { flex: 1; height: 6px; border-radius: 99px; background: rgba(15, 107, 63, 0.12); overflow: hidden; }
   .ci-bar span { display: block; height: 100%; background: var(--forest); transition: width 0.25s; }
   .ci-meta { font-size: 0.86rem; color: var(--text-soft); white-space: nowrap; }
   .ci-domain { margin-bottom: 8px; font-size: 0.95rem; color: var(--gold-deep); outline: none; }
@@ -23,7 +23,7 @@
   .ci-opts { display: grid; gap: 10px; margin: 24px 0; }
   .ci-opt { text-align: left; padding: 15px 18px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: #fff; color: var(--text); cursor: pointer; }
   .ci-opt:hover { border-color: var(--line-strong); }
-  .ci-opt[aria-pressed="true"] { border-color: var(--forest); background: rgba(27, 107, 63, 0.08); font-weight: 500; }
+  .ci-opt[aria-pressed="true"] { border-color: var(--forest); background: rgba(15, 107, 63, 0.08); font-weight: 500; }
   .ci-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .ci .btn[disabled] { opacity: 0.45; cursor: not-allowed; }
   .ci button:focus-visible, .ci a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
@@ -35,7 +35,7 @@
   .ci-rowtop { display: flex; justify-content: space-between; margin-bottom: 6px; }
   .ci h3 { margin: 28px 0 10px; font-family: "Cormorant Garamond", serif; font-size: 1.6rem; font-weight: 600; }
   .ci-tips { padding-left: 20px; line-height: 1.8; color: var(--text-soft); }
-  .ci-support { margin-top: 22px; padding: 16px 18px; border-radius: var(--radius-sm); background: rgba(184, 121, 69, 0.08); border: 1px solid rgba(184, 121, 69, 0.24); line-height: 1.7; color: var(--text-soft); }
+  .ci-support { margin-top: 22px; padding: 16px 18px; border-radius: var(--radius-sm); background: rgba(169, 120, 18, 0.08); border: 1px solid rgba(169, 120, 18, 0.24); line-height: 1.7; color: var(--text-soft); }
   @media (max-width: 600px) { .ci { padding: 22px; } .ci-nav .btn { width: 100%; } }
   @media (prefers-reduced-motion: reduce) { .ci-bar span { transition: none; } }
 </style>
@@ -86,7 +86,17 @@
           <p>Twelve short statements, about three minutes. You'll get a score for physical, mental, emotional and energy balance, plus a few ideas for where to start. Your answers aren't sent anywhere, and your latest result is remembered only in this browser.</p>
         </div>
         <div class="ci" id="ci"><noscript>Please turn on JavaScript to take the check-in.</noscript></div>
-        <div class="disclaimer" style="max-width:760px;">This check-in is based on your own answers. It is for general wellness insight and is not a medical assessment or diagnosis. The full BhuAyu assessment is done in person with a practitioner.</div>
+        <div class="disclaimer medical-care-disclaimer" role="note" style="max-width:760px;">
+          <strong>Complementary to Medical Care</strong>
+          <p>
+            This wellness check-in is intended to complement, not replace,
+            professional medical care. It does not diagnose or treat medical conditions.
+          </p>
+          <p>
+            If you have symptoms or health concerns, consult a qualified healthcare
+            professional. Do not delay or discontinue medical care based on an assessment result.
+          </p>
+        </div>
       </div>
     </section>
   </main>
