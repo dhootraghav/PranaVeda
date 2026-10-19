@@ -9,30 +9,41 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --earth-deep: #12251a;
-    --earth-warm: #1f5c3a;
-    --bark: #9c7a2e;
-    --clay: #b87945;
-    --sand: #f3e6c0;
-    --cream: #fdf6e6;
-    --gold: #c9982f;
-    --sage: #4a9b6e;
-    --sage-light: #9cc9ab;
-    --leaf: #1b6b3f;
-    --mist: #f0eae0;
-    --white: #fffdf8;
-    --text-dark: #201a12;
-    --text-soft: #6b5f4e;
-    --line: rgba(27, 107, 63, 0.16);
-    --shadow: 0 20px 50px rgba(14, 33, 23, 0.08);
+    :root {
+    --brand-green: #0F6B3F;
+    --brand-green-dark: #07512F;
+    --brand-gold: #C99A24;
+    --brand-gold-dark: #A97812;
+    --brand-green-light: #E8F3EC;
+    --brand-cream: #FBF8F0;
+    --brand-white: #FFFFFF;
+    --brand-text: #26332D;
+    --brand-border: #D9DED9;
+
+    /* Local dashboard aliases retained for existing rules */
+    --earth-deep: var(--brand-green-dark);
+    --earth-warm: var(--brand-green);
+    --bark: var(--brand-gold-dark);
+    --clay: var(--brand-gold-dark);
+    --sand: var(--brand-green-light);
+    --cream: var(--brand-cream);
+    --gold: var(--brand-gold);
+    --sage: var(--brand-green);
+    --sage-light: var(--brand-green-light);
+    --leaf: var(--brand-green);
+    --mist: var(--brand-cream);
+    --white: var(--brand-white);
+    --text-dark: var(--brand-text);
+    --text-soft: rgba(38, 51, 45, 0.78);
+    --line: rgba(15, 107, 63, 0.16);
+    --shadow: 0 20px 50px rgba(7, 81, 47, 0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: "Jost", sans-serif;
     background:
-      radial-gradient(circle at top left, rgba(201,152,47,0.12), transparent 22%),
-      linear-gradient(180deg, #fbf5ec 0%, #f5eee4 100%);
+      radial-gradient(circle at top left, rgba(201,154,36,0.12), transparent 22%),
+      linear-gradient(180deg, #FBF8F0 0%, #FBF8F0 100%);
     color: var(--text-dark);
   }
   a { color: inherit; text-decoration: none; }
@@ -43,7 +54,7 @@
     z-index: 10;
     background: rgba(250,243,232,0.92);
     backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(27,107,63,0.16);
+    border-bottom: 1px solid rgba(15,107,63,0.16);
   }
   .nav-wrap {
     min-height: 74px;
@@ -96,7 +107,7 @@
   .btn-secondary {
     background: transparent;
     color: var(--earth-deep);
-    border-color: rgba(27,107,63,0.35);
+    border-color: rgba(15,107,63,0.35);
   }
   .hero {
     padding: 44px 0 24px;
@@ -123,12 +134,12 @@
     gap: 10px;
     padding: 7px 14px;
     border-radius: 999px;
-    border: 1px solid rgba(201,152,47,0.28);
+    border: 1px solid rgba(201,154,36,0.28);
     color: var(--bark);
     font-size: 0.76rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
-    background: rgba(201,152,47,0.08);
+    background: rgba(201,154,36,0.08);
   }
   .eyebrow::before {
     content: "";
@@ -161,7 +172,7 @@
     padding: 16px;
     border-radius: 18px;
     background: var(--white);
-    border: 1px solid rgba(27,107,63,0.14);
+    border: 1px solid rgba(15,107,63,0.14);
   }
   .summary-card span {
     display: block;
@@ -177,7 +188,7 @@
   }
   .welcome-card {
     padding: 28px;
-    background: linear-gradient(140deg, #123420 0%, #1f5c3a 100%);
+    background: linear-gradient(140deg, #07512F 0%, #0F6B3F 100%);
     color: var(--cream);
   }
   .welcome-card p {
@@ -213,7 +224,7 @@
     padding: 14px 16px;
     border-radius: 18px;
     background: var(--white);
-    border: 1px solid rgba(27,107,63,0.12);
+    border: 1px solid rgba(15,107,63,0.12);
   }
   .metric-row header {
     display: flex;
@@ -224,17 +235,17 @@
     height: 8px;
     border-radius: 999px;
     overflow: hidden;
-    background: rgba(27,107,63,0.12);
+    background: rgba(15,107,63,0.12);
   }
   .bar span {
     display: block;
     height: 100%;
     border-radius: inherit;
   }
-  .bar.physical span { background: linear-gradient(90deg, #c9982f, #e8c158); }
-  .bar.mental span { background: linear-gradient(90deg, #1b6b3f, #4a9b6e); }
-  .bar.emotional span { background: linear-gradient(90deg, #9c7a2e, #d8b45f); }
-  .bar.energy span { background: linear-gradient(90deg, #0e2117, #1b6b3f); }
+  .bar.physical span { background: linear-gradient(90deg, #C99A24, #C99A24); }
+  .bar.mental span { background: linear-gradient(90deg, #0F6B3F, #0F6B3F); }
+  .bar.emotional span { background: linear-gradient(90deg, #A97812, #C99A24); }
+  .bar.energy span { background: linear-gradient(90deg, #07512F, #0F6B3F); }
   .table-wrap {
     overflow-x: auto;
   }
@@ -245,7 +256,7 @@
   th, td {
     padding: 14px 0;
     text-align: left;
-    border-bottom: 1px solid rgba(27,107,63,0.12);
+    border-bottom: 1px solid rgba(15,107,63,0.12);
     white-space: nowrap;
   }
   th {
@@ -264,8 +275,8 @@
     letter-spacing: 0.08em;
   }
   .pill.good { background: rgba(122,158,126,0.14); color: var(--leaf); }
-  .pill.watch { background: rgba(201,152,47,0.14); color: #9f6e1c; }
-  .pill.review { background: rgba(184,121,69,0.14); color: var(--clay); }
+  .pill.watch { background: rgba(201,154,36,0.14); color: #A97812; }
+  .pill.review { background: rgba(169,120,18,0.14); color: var(--clay); }
   .pill.confirmed { background: rgba(122,158,126,0.14); color: var(--leaf); }
   .empty {
     color: var(--text-soft);
@@ -321,6 +332,28 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* Align the standalone dashboard with the BhuAyu brand palette */
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(201,154,36,0.12), transparent 22%),
+      linear-gradient(180deg, var(--brand-cream) 0%, var(--brand-white) 100%);
+    color: var(--brand-text);
+  }
+  nav {
+    background: rgba(251,248,240,0.92);
+    border-bottom-color: rgba(15,107,63,0.16);
+  }
+  .btn-primary {
+    background: var(--brand-green);
+    border-color: var(--brand-green);
+    color: var(--brand-white);
+  }
+  .btn-primary:hover {
+    background: var(--brand-green-dark);
+    border-color: var(--brand-green-dark);
+  }
+
 </style>
 </head>
 <body>
