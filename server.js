@@ -91,11 +91,13 @@ function defaultStore() {
       users: 0,
       assessments: 0,
       bookings: 0,
-      emailLogs: 0
+      emailLogs: 0,
+      corporateConsultations: 0
     },
     users: [],
     assessments: [],
     bookings: [],
+    corporateConsultations: [],
     emailLogs: []
   };
 }
@@ -103,7 +105,11 @@ function defaultStore() {
 function loadStore() {
   ensureRuntime();
   try {
-    return JSON.parse(fs.readFileSync(STORE_PATH, "utf8"));
+    const store = JSON.parse(fs.readFileSync(STORE_PATH, "utf8"));
+    store.counters = store.counters || {};
+    store.counters.corporateConsultations = store.counters.corporateConsultations || 0;
+    store.corporateConsultations = Array.isArray(store.corporateConsultations) ? store.corporateConsultations : [];
+    return store;
   } catch (error) {
     const store = defaultStore();
     fs.writeFileSync(STORE_PATH, JSON.stringify(store, null, 2));
@@ -321,7 +327,7 @@ async function sendConfirmationEmail({ booking, firstName, email }) {
   ensureRuntime();
   const subject = `${pickSubject(booking.service)} • ${booking.confirmationCode}`;
   const html = `
-    <div style="font-family:Arial,sans-serif;line-height:1.6;color:#2b180d">
+    <div style="font-family:Arial,sans-serif;line-height:1.6;color:#26332D">
       <h2 style="margin-bottom:8px;">BhuAyu Session Confirmed</h2>
       <p>Hello ${firstName},</p>
       <p>Your booking has been confirmed for <strong>${booking.service}</strong>.</p>
@@ -359,6 +365,104 @@ async function sendConfirmationEmail({ booking, firstName, email }) {
     previewPath: `/email_previews/${booking.confirmationCode}.json`
   };
 }
+
+
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[character]));
+}
+
+app.post("/api/corporate-consultations", async (req, res) => {
+  const contactPerson = String(req.body.contactPerson || "").trim();
+  const workEmail = normalizeEmail(req.body.workEmail);
+  const contactNumber = String(req.body.contactNumber || "").trim();
+  const organisation = String(req.body.organisation || "").trim();
+  const employeeStrength = String(req.body.employeeStrength || "").trim();
+  const message = String(req.body.message || "").trim();
+  const consent = req.body.consent === true || req.body.consent === "true";
+  const allowedStrengths = new Set(["Up to 100", "101–500", "501–2,000", "More than 2,000"]);
+  const allowedAreas = new Set([
+    "Organizational Wellness Index",
+    "Employee assessments",
+    "Corporate wellness camp",
+    "Periodic monitoring"
+  ]);
+  const rawAreas = Array.isArray(req.body.areaOfInterest)
+    ? req.body.areaOfInterest
+    : (req.body.areaOfInterest ? [req.body.areaOfInterest] : []);
+  const areaOfInterest = [...new Set(rawAreas.map((value) => String(value).trim()).filter((value) => allowedAreas.has(value)))];
+
+  if (!contactPerson || !workEmail || !contactNumber || !organisation || !employeeStrength) {
+    return res.status(400).json({ error: "Please complete all required consultation fields." });
+  }
+  if (!isValidEmail(workEmail)) {
+    return res.status(400).json({ error: "Please enter a valid work email address." });
+  }
+  if (contactPerson.length > 120 || organisation.length > 160 || contactNumber.length > 30 || message.length > 1200) {
+    return res.status(400).json({ error: "One or more fields exceed the allowed length." });
+  }
+  if (!allowedStrengths.has(employeeStrength)) {
+    return res.status(400).json({ error: "Please select a valid employee-strength range." });
+  }
+  if (!areaOfInterest.length) {
+    return res.status(400).json({ error: "Please select at least one area of interest." });
+  }
+  if (!consent) {
+    return res.status(400).json({ error: "Please confirm that BhuAyu may use these details to respond." });
+  }
+
+  const store = loadStore();
+  const consultation = {
+    id: nextId(store, "corporateConsultations"),
+    reference: randomCode("BC"),
+    contactPerson,
+    workEmail,
+    contactNumber,
+    organisation,
+    employeeStrength,
+    areaOfInterest,
+    message,
+    status: "Received",
+    consent: true,
+    createdAt: nowIso()
+  };
+  store.corporateConsultations.push(consultation);
+  saveStore(store);
+
+  const subject = `New BhuAyu corporate consultation request — ${consultation.reference}`;
+  const html = `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#26332D"><h2>Corporate consultation request</h2><p><strong>Reference:</strong> ${escapeHtml(consultation.reference)}</p><p><strong>Contact person:</strong> ${escapeHtml(contactPerson)}<br><strong>Work email:</strong> ${escapeHtml(workEmail)}<br><strong>Contact number:</strong> ${escapeHtml(contactNumber)}<br><strong>Organisation:</strong> ${escapeHtml(organisation)}<br><strong>Employee strength:</strong> ${escapeHtml(employeeStrength)}</p><p><strong>Areas of interest:</strong> ${areaOfInterest.map(escapeHtml).join(", ")}</p><p><strong>Additional information:</strong> ${escapeHtml(message || "Not provided")}</p></div>`;
+  let delivery = "recorded";
+  try {
+    const transport = createTransport();
+    if (transport) {
+      await transport.sendMail({
+        from: process.env.SMTP_FROM || process.env.SMTP_USER || "hello@bhuayu.local",
+        to: process.env.CORPORATE_LEADS_TO || "info@bhuayu.com",
+        replyTo: workEmail,
+        subject,
+        html
+      });
+      delivery = "email-sent";
+    } else {
+      ensureRuntime();
+      const previewPath = path.join(EMAIL_DIR, `${consultation.reference}.json`);
+      fs.writeFileSync(previewPath, JSON.stringify({ to: process.env.CORPORATE_LEADS_TO || "info@bhuayu.com", replyTo: workEmail, subject, html, createdAt: nowIso() }, null, 2));
+      delivery = "recorded";
+    }
+  } catch (error) {
+    console.error("Corporate consultation email failed:", error.message);
+    // The lead is already saved, so do not lose the user's successful submission.
+    delivery = "recorded-email-pending";
+  }
+
+  return res.status(201).json({
+    ok: true,
+    consultation: { reference: consultation.reference, status: consultation.status },
+    delivery
+  });
+});
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, runtime: IS_VERCEL ? "vercel" : "local" });

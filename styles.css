@@ -1,25 +1,38 @@
 :root {
-  --bg: #fbf9f4;
-  --bg-soft: #ffffff;
-  --panel: #fffefb;
-  --panel-dark: #0e2117;
-  --line: rgba(27, 107, 63, 0.16);
-  --line-strong: rgba(27, 107, 63, 0.32);
-  --text: #201a12;
-  --text-soft: #6b5f4e;
-  --text-faint: #a79a85;
-  --gold: #c9982f;
-  --gold-soft: #e8c158;
-  --gold-deep: #9c7a2e;
-  --clay: #b87945;
-  --sage: #4a9b6e;
-  --forest: #1b6b3f;
-  --forest-deep: #0e2117;
-  --cream: #fdf6e6;
-  --shadow: 0 24px 60px rgba(14, 33, 23, 0.08);
+  --brand-green: #0F6B3F;
+  --brand-green-dark: #07512F;
+  --brand-gold: #C99A24;
+  --brand-gold-dark: #A97812;
+  --brand-green-light: #E8F3EC;
+  --brand-cream: #FBF8F0;
+  --brand-white: #FFFFFF;
+  --brand-text: #26332D;
+  --brand-border: #D9DED9;
+  --corporate-navy: #142C43;
+  --corporate-navy-dark: #0A1D2E;
+
+  /* Compatibility aliases used throughout the existing site */
+  --bg: var(--brand-cream);
+  --bg-soft: var(--brand-white);
+  --panel: var(--brand-white);
+  --panel-dark: var(--brand-green-dark);
+  --line: rgba(15, 107, 63, 0.16);
+  --line-strong: rgba(15, 107, 63, 0.32);
+  --text: var(--brand-text);
+  --text-soft: #53635A;
+  --text-faint: #78857D;
+  --gold: var(--brand-gold);
+  --gold-soft: #E5C66E;
+  --gold-deep: var(--brand-gold-dark);
+  --clay: var(--brand-gold-dark);
+  --sage: #4A9B6E;
+  --forest: var(--brand-green);
+  --forest-deep: var(--brand-green-dark);
+  --cream: var(--brand-cream);
+  --shadow: 0 24px 60px rgba(7, 81, 47, 0.08);
   --radius: 24px;
   --radius-sm: 16px;
-  --max: 1240px;
+  --max: 1160px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,7 +43,7 @@ body {
   background:
     radial-gradient(circle at top left, rgba(201, 152, 47, 0.14), transparent 28%),
     radial-gradient(circle at 80% 20%, rgba(27, 107, 63, 0.12), transparent 24%),
-    linear-gradient(180deg, #fbf6ef 0%, #f6efe4 100%);
+    linear-gradient(180deg, #FBF8F0 0%, #FBF8F0 100%);
   overflow-x: hidden;
 }
 
@@ -50,7 +63,7 @@ nav .container { width: min(1440px, calc(100% - 32px)); }
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: #9c7a2e;
+  color: #A97812;
   background: rgba(255, 250, 242, 0.7);
 }
 .eyebrow::before {
@@ -68,7 +81,7 @@ nav .container { width: min(1440px, calc(100% - 32px)); }
 .section-head h2 {
   margin-top: 18px;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(2.3rem, 4vw, 4rem);
+  font-size: clamp(2rem, 3.2vw, 3.25rem);
   line-height: 1.04;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -199,21 +212,67 @@ nav {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 42px;
-  padding: 0 18px;
-  border-radius: 2px;
+  min-height: 44px;
+  padding: 12px 20px;
   border: 1px solid transparent;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  text-decoration: none;
+  font: inherit;
+  font-size: 0.82rem;
   font-weight: 600;
-  white-space: nowrap;
+  letter-spacing: 0.03em;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid #C99A24;
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  background: #0F6B3F;
+  color: #FFFFFF;
+  border-color: #0F6B3F;
+  box-shadow: 0 5px 14px rgba(27, 107, 63, 0.14);
+}
+
+.btn-primary:hover {
+  background: #145330;
+  border-color: #145330;
+}
+
+.btn-secondary {
+  border-color: rgba(27, 107, 63, 0.35);
+  color: #16462d;
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: #e8f0df;
+  border-color: #0F6B3F;
+}
+
+.btn-ghost {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #FBF8F0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.14);
 }
 .btn:hover { transform: translateY(-2px); }
 .btn-primary {
-  background: linear-gradient(135deg, #123420, #1f5c3a);
+  background: linear-gradient(135deg, #07512F, #0F6B3F);
   color: var(--cream);
   box-shadow: 0 18px 40px rgba(43, 24, 13, 0.16);
 }
@@ -310,7 +369,7 @@ nav {
   font-size: 0.76rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #9c7a2e;
+  color: #A97812;
   margin-bottom: 12px;
 }
 .vision-card h3 {
@@ -347,7 +406,7 @@ nav {
   display: grid;
   place-items: center;
   background: radial-gradient(circle at 30% 30%, var(--gold-soft), var(--gold));
-  color: #201a12;
+  color: #26332D;
   font-family: "Cormorant Garamond", serif;
   font-size: 1.5rem;
   font-weight: 700;
@@ -433,7 +492,7 @@ nav {
   margin: 0 auto 12px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-  color: #201a12;
+  color: #26332D;
   font-weight: 700;
 }
 .journey-step h3 {
@@ -538,7 +597,7 @@ nav {
   .hierarchy-arrow { transform: rotate(90deg); }
 }
 
-section { padding: 92px 0; }
+section { padding: 72px 0; }
 .surface {
   background: rgba(255, 255, 255, 0.48);
   border-top: 1px solid rgba(27, 107, 63, 0.08);
@@ -547,7 +606,7 @@ section { padding: 92px 0; }
 .dark-surface {
   background:
     radial-gradient(circle at top right, rgba(201, 152, 47, 0.18), transparent 24%),
-    linear-gradient(180deg, #12251a 0%, #0c1b12 100%);
+    linear-gradient(180deg, #07512F 0%, #0A1D2E 100%);
   color: #f8ecd6;
 }
 .dark-surface .section-head p { color: rgba(248, 236, 214, 0.72); }
@@ -641,7 +700,7 @@ section { padding: 92px 0; }
   font-size: 0.76rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #9c7a2e;
+  color: #A97812;
 }
 
 .service-grid,
@@ -671,7 +730,7 @@ section { padding: 92px 0; }
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px dashed rgba(27, 107, 63, 0.18);
-  color: #9c7a2e;
+  color: #A97812;
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -692,7 +751,7 @@ section { padding: 92px 0; }
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, #123420, #1f5c3a);
+  background: linear-gradient(135deg, #07512F, #0F6B3F);
   color: var(--cream);
   font-weight: 700;
 }
@@ -713,7 +772,7 @@ section { padding: 92px 0; }
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #9c7a2e;
+  color: #A97812;
 }
 .status {
   display: inline-flex;
@@ -726,7 +785,7 @@ section { padding: 92px 0; }
   letter-spacing: 0.08em;
 }
 .status.good { background: rgba(27, 107, 63, 0.12); color: var(--forest); }
-.status.watch { background: rgba(201, 152, 47, 0.14); color: #9c7a2e; }
+.status.watch { background: rgba(201, 152, 47, 0.14); color: #A97812; }
 .status.review { background: rgba(184, 121, 69, 0.14); color: #8e5724; }
 
 .blog-card {
@@ -778,7 +837,7 @@ section { padding: 92px 0; }
   margin-bottom: 10px;
 }
 .org-meter header span:last-child {
-  color: #9c7a2e;
+  color: #A97812;
   font-weight: 600;
 }
 .org-meter .bar {
@@ -941,4 +1000,248 @@ footer {
     overflow-x: auto;
     white-space: nowrap;
   }
+}
+
+
+/* BhuAyu visual identity additions */
+:root {
+  --corporate-navy: #142C43;
+  --corporate-navy-dark: #0A1D2E;
+}
+
+/* Photography from the provided BhuAyu site brief */
+.feature-visual,
+.wide-photo,
+.audience-photo,
+.report-photo,
+.corporate-photo {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--brand-border);
+  border-radius: 18px;
+  background: var(--brand-white);
+  box-shadow: 0 18px 44px rgba(7, 81, 47, 0.10);
+}
+.feature-visual img,
+.wide-photo img,
+.audience-photo img,
+.report-photo img,
+.corporate-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.feature-visual figcaption,
+.wide-photo figcaption,
+.audience-photo figcaption,
+.report-photo figcaption,
+.corporate-photo figcaption {
+  padding: 11px 15px;
+  color: var(--brand-text);
+  background: var(--brand-white);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* Corporate pages use navy for the professional/institutional identity. */
+body.corporate-page .dark-surface,
+body.corporate-page .hero {
+  background: linear-gradient(135deg, var(--corporate-navy), var(--corporate-navy-dark));
+  color: var(--brand-white);
+}
+body.corporate-page .dark-surface .section-head p,
+body.corporate-page .hero p {
+  color: rgba(255, 255, 255, 0.78);
+}
+body.corporate-page .dark-surface .eyebrow,
+body.corporate-page .hero .eyebrow {
+  color: #E5C66E;
+  border-color: rgba(201, 154, 36, 0.45);
+}
+
+/* Medical disclaimer: reusable on all assessment-related pages. */
+.medical-notice,
+.assessment-medical-notice,
+.global-medical-notice {
+  margin: 24px 0;
+  padding: 20px 22px;
+  background: var(--brand-cream);
+  color: var(--brand-text);
+  border: 1px solid var(--brand-border);
+  border-left: 4px solid var(--brand-gold);
+  border-radius: 10px;
+  line-height: 1.7;
+}
+.medical-notice h3,
+.assessment-medical-notice strong,
+.global-medical-notice strong {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--brand-green-dark);
+  font-size: 1.05rem;
+}
+.medical-notice p,
+.assessment-medical-notice p,
+.global-medical-notice p { margin: 0; }
+.medical-notice p + p,
+.assessment-medical-notice p + p,
+.global-medical-notice p + p { margin-top: 10px; }
+
+/* Corporate consultation form */
+.consultation-section { padding: 76px 0; background: var(--brand-cream); }
+.consultation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 28px;
+  align-items: start;
+}
+.consultation-intro h2 { color: var(--brand-green-dark); }
+.consultation-intro p { color: var(--brand-text); line-height: 1.8; }
+.consultation-form { padding: 28px; background: var(--brand-white); border: 1px solid var(--brand-border); border-radius: 18px; box-shadow: var(--shadow); }
+.consultation-form .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.consultation-form .field { margin-bottom: 16px; }
+.consultation-form label,
+.consultation-form legend { display: block; margin-bottom: 7px; color: var(--brand-text); font-size: 0.88rem; font-weight: 600; }
+.consultation-form input,
+.consultation-form select,
+.consultation-form textarea {
+  width: 100%; min-height: 44px; padding: 11px 12px;
+  border: 1px solid var(--brand-border); border-radius: 8px;
+  background: var(--brand-white); color: var(--brand-text);
+}
+.consultation-form textarea { min-height: 100px; resize: vertical; }
+.consultation-form input:focus-visible,
+.consultation-form select:focus-visible,
+.consultation-form textarea:focus-visible { outline: 3px solid rgba(201, 154, 36, 0.42); outline-offset: 2px; border-color: var(--brand-green); }
+.consultation-form fieldset { margin: 0 0 16px; padding: 14px; border: 1px solid var(--brand-border); border-radius: 10px; }
+.consultation-form .area-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.consultation-form .area-option,
+.consultation-form .consent-row { display: flex; align-items: flex-start; gap: 9px; font-weight: 400; line-height: 1.5; }
+.consultation-form .area-option input,
+.consultation-form .consent-row input { width: auto; min-height: auto; margin-top: 4px; flex-shrink: 0; }
+.consultation-form .form-message { margin-top: 14px; line-height: 1.6; font-weight: 600; }
+.consultation-form .form-message[data-state="success"] { color: var(--brand-green-dark); }
+.consultation-form .form-message[data-state="error"] { color: #9B2C2C; }
+.consultation-form .form-privacy { margin: 12px 0 18px; color: #53635A; font-size: 0.82rem; line-height: 1.65; }
+
+@media (max-width: 760px) {
+  .consultation-layout { grid-template-columns: 1fr; }
+  .consultation-form { padding: 20px; }
+  .consultation-form .form-grid,
+  .consultation-form .area-options { grid-template-columns: 1fr; }
+}
+
+
+.brand-wordmark { display:inline-flex; flex-direction:column; line-height:1.05; }
+.brand-wordmark small { margin-top:3px; color:var(--brand-green); font-family:"Jost",sans-serif; font-size:.55rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; }
+
+
+body.corporate-page .hero h1,
+body.corporate-page .hero h2,
+body.corporate-page .hero h3 { color: var(--brand-white); }
+body.corporate-page .hero .btn-secondary {
+  color: var(--brand-white);
+  border-color: rgba(255,255,255,.65);
+  background: transparent;
+}
+body.corporate-page .hero .btn-secondary:hover {
+  background: rgba(255,255,255,.10);
+}
+
+
+/* Centered, more compact site layout */
+.container {
+  width: min(var(--max, 1160px), calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Keep section introductions aligned to the centre of the content column. */
+.container > .section-head {
+  width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.section-head h2 {
+  font-size: clamp(2rem, 3.2vw, 3.25rem);
+  line-height: 1.12;
+}
+
+.section-head p {
+  max-width: 66ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero {
+  padding-top: 54px;
+  padding-bottom: 68px;
+}
+
+@media (max-width: 1100px) {
+  section { padding: 60px 0; }
+  .hero { padding-top: 42px; padding-bottom: 54px; }
+}
+
+@media (max-width: 640px) {
+  .container { width: min(var(--max, 1160px), calc(100% - 32px)); }
+  section { padding: 48px 0; }
+  .hero { padding-top: 28px; padding-bottom: 44px; }
+  .container > .section-head { margin-bottom: 24px; }
+  .section-head h2 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+}
+
+
+/* Current-page navbar state */
+.nav-links a.is-current-page,
+.nav-actions a.nav-link-plain.is-current-page {
+  position: relative;
+  color: var(--brand-green-dark, #07512F) !important;
+  font-weight: 700;
+}
+.nav-links > li > a.is-current-page::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--brand-gold, #C99A24);
+}
+.nav-links .dropdown a.is-current-page {
+  background: var(--brand-green-light, #E8F3EC);
+  border-radius: 9px;
+  color: var(--brand-green-dark, #07512F) !important;
+}
+.nav-links .has-dropdown.is-active-parent > a {
+  color: var(--brand-green-dark, #07512F) !important;
+  font-weight: 700;
+}
+.nav-links .has-dropdown.is-active-parent > a::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--brand-gold, #C99A24);
+}
+.nav-actions a.nav-link-plain.is-current-page {
+  border-bottom: 2px solid var(--brand-gold, #C99A24);
+  padding-bottom: 5px;
+}
+
+
+
+/* Global typography: use Jost consistently across all site text. */
+html, body, body *:not(svg):not(svg *) {
+  font-family: "Jost", sans-serif !important;
 }
